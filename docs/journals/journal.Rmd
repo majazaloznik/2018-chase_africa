@@ -1,0 +1,18 @@
+---
+title: "Journal--Chase Africa "
+output:
+  pdf_document: default
+---
+# Makefile
+
+This is what my makefile looks like graphically at the minute:
+
+```{r, echo = FALSE, out.width='100%'}
+knitr::include_graphics(paste0(rprojroot::find_root("Makefile"),"/figures/make.png"))
+```
+
+# Monday 29.10.2018
+
+1. Initialise repository
+
+2. Move data into `raw` data folder, make sure not in repository. 

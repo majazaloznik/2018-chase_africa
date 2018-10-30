@@ -1,0 +1,125 @@
+---
+title: "Data Outline---Chase Africa "
+output:
+  pdf_document:
+    toc: true
+    number_sections: true
+    toc_depth: 3
+---
+
+# Files and sheets
+
+Seven files of annual and all year data summaries for seven different projects?
+  
+* `2012-18 CHAT data summary CP.xlsx` -- 7 annual sheets + summary sheet
+* `2014-18 Dandelion data summary & CYP CP.xlsx`-- 5 annual sheets + summary sheet
+* `2014-18 MKT data summary & CYP CP.xlsx` -- 5 annual sheets + summary sheet
+* `Big Life data summary & CYP CP.xlsx` -- 2 annual sheets + summary sheet
+* `CHV data summary & CYP CP.xlsx` - 3 annual sheets + summary sheet
+* `RICE WN Data summary & CYP CP.xlsx`-- 1 annual sheet + summary sheet
+
+The MKT data sheets additionally have some vehicle contribution payment schedules attached
+
+The CHV data sheets additionally have a pre-chase data sheet?
+  
+  Overall structure seems similar: over the years the tables become more detailed, include more columns, the final ones are most complete.
+
+Some calculations are made using formulas in the sheets, not all though. 
+
+## Tables
+
+### Row (case)--
+
+Rows do not correspond to unique cases, which would ideally be individual clinic and date combination, so the data is not *tidy*, but instead switch between cases and (sub-)totals, with some money related cells having an ad hoc structure as well. It all seems readable, but is a dangerous precedent that could easily lead to errors.
+
+### Column (variables): 
+
+#### Location and funding of free clinic
+
+* *date of day-clinic*
+  + *venue*
+  + (also additional information about cost sharing?)
+* *amount* / date funding reveiced
++ there are amounts in Ksh and £, additionally also apportionment of money sometimes?
+  + if there are two rows per 'case', not clear if this is to do with the individual grants?
+  
+  #### Mobilizaiton, Education
+  
+  This category of variables seems to only exist in the CHAT files. 
+
+* *Mobilization, education* (until 2017)
++ sometimes split (Male, Female, Total)
+* *Behaviour change (Sensitization)* 2018, but classed as Mob-ed in summary tables?
+  +  split (Male, Female, Total)
+* *Youth out of school sensitised on RH/FP Mobilization, ecological sensitization* (until 2015)
+  +  split (Male, Female, Total)
+
+#### Family planning 
+
+* *LONG TERM METHODS* 
+  + divided into IUCD, 5yr, 5 yr rep, 3 yr and tubal ligation
+  + sometimes data not known and "5/3yr split not provided so 50:50 assumed"
+* *SHORT TERM METHODS* 
+  + divided into Depo and pills (6, 3, 1months)
+  + sometimes just says "Pills", not clear how long?
+  + Also "pills No. new" and "pills no.rev", but these seem to be counted differently? in the CYP calculations?
+  * *AGE RANGE OF CLIENTS (FP)* (from 2016)
+  + in 2016 and 2017 0-15/ 16-30/ over 30
+  + in 2018 under 18 and over 18
+* *TOTAL FP* - total family planning
+  + derived = sum of long and short term methods
+* *CYP TOTAL* - couple years of protection
+  + derived from long and short term methods and a set of CYPs e.g. 3.8 for 5 year implant = these are all contained in the formulas!
+  + IUCD 4.6
+  + 5 year implant/rep = 3.8
+  + 3 year implant/rep = 2.5
+  + Depo 1st/ Depo rep = 0.25
+  + Pills (3 mths) = 0.2
+  + Pills 6 mnth = 1/2.2 = 0.4545
+  + Pills 1 mnth = 1/15  = 0.666
+  + nothing on the other two pillse oclumns 'no. new and no. rev"?
+* *cost per person* and *Cost per CYP*  derived from dividing amount by FP total and CYP total
+* *CONDOMS* - in guess units? seems to be in all the tables
+  + not used in CPY calculations
+* *Implant removal* 
+  + This only turns up in 2018 I think. No info on continuation or not?
+* *persons with disabilty FP* 
+  + only 2018 I think
+
+CYP measures the volume of programme activity from service statistics or logistics management information systems. It is currenlty the most widely used indicator of output in international family planning programmes. It's easy to calculate from routinely collected data. 
+
+Issues:
+  
+* Does not give any indication of the number of individuals affected/represented by the number. 
+* conversion factors are debatable?
+* reflects distribution and not actual use or impact?
+* you "credit" the entire amount to the year in which the method was delivered. e.g. the 9 year CYP for a sterilization will count in that single year, even though the protection will be realised over the next 9 years. *annualization* is an option though, we can split it over the next nine year period! This should happen with all long term contraception
+* what about removal? it's part of access to FP services, yet reduces CYP. But doesn't seem to get included in calculations. 
+
+#### Integrated health services (NA 2011/12)
+
+* *Primary health care* or sometimes *Basic health care* (NA 2011/12) 
+* *TB* - only in CHAT,2014 and 2015 I htink
+  + *TB - contacts traced* 
+  + *TB household education* 
+  + *TB - defaulters traced"* 
+* *HIV/AIDS* 
+  + *TEST* 
+  + *+ve* 
+* *Deworming children* ( NA 2011/12, 2013, 2014, 2015)
+  + *Immunization* ( NA 2011/12, 2013, 2014, 2015)
+* *maralria test* test/+ve (only 2018)
+  + *TEST* 
+  + *+ve* 
+* *cancer screening* test/+ve(only 2018)
+  + *TEST* 
+  + *+ve* 
+* *hep B test* test/+ve (only 2018)
+  + *TEST* 
+  + *+ve* 
+* *persons with disability health services* (only 2018)
+* *Health services only* - derived from primary health care, TB contacts traced and HIV tests, and deworming and immunization when available - sum of people treated?
+* *Health & Family planning* - derived sum total family planning and health services. 
+
+
+

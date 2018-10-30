@@ -86,7 +86,7 @@ endef
 # DEPENDENCIES   ##############################################################
 ###############################################################################
 
-all: journal readme dot 
+all: journal readme dot outline
 
 .PHONY: all
 
@@ -114,7 +114,15 @@ $(JRN)/journal.pdf:  $(JRN)/journal.Rmd
 $(JRN)/journal.html:  $(JRN)/journal.Rmd 
 	$(rmd2html)
 
+# data outline from Rmds ###########################################################
+outline: $(RPRT)/01-data_outline.pdf 
 
+# journal (with graph) render to  pdf
+$(RPRT)/01-data_outline.pdf:  $(RPRT)/01-data_outline.Rmd 
+	$(rmd2pdf)
+
+
+	
 # README from Rmds #############################################################
 readme: README.html
 

@@ -1,7 +1,10 @@
 ---
 title: "Journal--Chase Africa "
 output:
-  pdf_document: default
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
 ---
 # Makefile
 
@@ -17,62 +20,13 @@ knitr::include_graphics(paste0(rprojroot::find_root("Makefile"),"/figures/make.p
 
 2. Move data into `raw` data folder, make sure not in repository. 
 
-3. What are the data files?
+3. What are the data files? Outline sheets
 
-`2012-18 CHAT data summary CP.xlsx`
+# Tuesday 20.10.2018
 
-## Sheets: 
-CHAT data summary individual years (7 sheets) and summary all years (1 year)
+1. Finish the CHAT file outline
 
-### Tables:
-Row (case) - individual clinic
+2. Go through all files and complete outline of data. write up in `01-data_outline.Rmd`
 
-Column (variables: 
+3. Update makefile
 
-* date of day-clinic
-* venue
-  + (also additional information about cost sharing?)
-* *amount* / date funding reveiced
-  + there are amounts in Ksh and £, additionally also apportionment of money?
-* *Mobilization, education* (Male, Female, Total)
-  + two rows per 'case', not clear if this is to do with the individual grants?
-* *Youth Out of School sensitised on RH/FP Mobilization, Ecoological Sensitization* (Male, Female, Total)
-* *LONG TERM METHODS (5/3yr split not provided so 50:50 assumed)* 
-  + divided into 5yr, 5 yr rep, 3 yr and tubal ligation
-* *SHORT TERM METHODS* 
-  + divided into Depo and pills (3 months)
-  + Also "pills No new" and "pills no.rev", but these seem to be counted differently?
-* *TOTAL FP* - total family planning
-  + derived = sum of long and short term methods
-* *CYP TOTAL* - couple years of protection
-  + derived from long and short term methods and a set of CYPs e.g. 3.8 for 5 year implant = these are all contained in the formulas!
-  + 5 year implant/rep = 3.8
-  + 3 year implant/rep = 2.5
-  + Depo 1st/ Depo rep = 0.25
-  + Pills (3 mths) = 0.2
-  + Pills 6 mnth = 1/2.2 = 0.4545
-  + Pills 1 mnth = 1/15  = 0.666
-  + nothing on the other two pillse oclumns 'no. new and no. rev"?
-* *cost per person* and *Cost per CYP*  derived from dividing amount by FP total and CYP total
-* *CONDOMS* - in guess units?
-* *Integrated health services* (NA 2011/12)
-  + *Primary health care* (NA 2011/12)
-  + *TB - contacts traced* (NA 2011/12, 2013, 2016, 2017)
-  + *TB household education* (NA 2011/12, 2013,  2016, 2017)
-  + *TB - defaulters traced"* (NA 2011/12, 2013,  2016, 2017)
-  + *HIV/AIDS VCT - TEST* (NA 2011/12)
-  + *HIV/AIDS VCT - +ve* (NA 2011/12)
-  + *Deworming children* ( NA 2011/12, 2013, 2014, 2015)
-  + *Immunization* ( NA 2011/12, 2013, 2014, 2015)
-  + *Implant removal* (only 2018)
-  + *Basic health care* (only 2018)
-  + *maralria test* test/+ve (only 2018)
-  + *cancer screening* test/+ve(only 2018)
-  + *hep B test* test/+ve (only 2018)
-* *persons with disabilty FP* (only 2018)
-* *persons with disavility health services8 (only 2018)
-* *Health services only* - derived from primary health care, TB contacts traced and HIV tests, and deworming and immunization when available - sum
-* *Helth & Family planning* - derived sum total family planning and health services. 
-
-
-  

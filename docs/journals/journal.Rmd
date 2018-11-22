@@ -22,11 +22,28 @@ knitr::include_graphics(paste0(rprojroot::find_root("Makefile"),"/figures/make.p
 
 3. What are the data files? Outline sheets
 
-# Tuesday 20.10.2018
+# Tuesday 30.10.2018
 
 1. Finish the CHAT file outline
 
 2. Go through all files and complete outline of data. write up in `01-data_outline.Rmd`
 
 3. Update makefile
+
+# Thursday 22.11.2018
+
+1. OK, now I'm meant to do some 'analysis'. 
+
+2. OK, so first thing is consolidating all the data into one file. Doing this manually will be a pain, but also really bad practice. Let's see if `readxl` might not be an option.
+
+3. OK, Dandelion 2014 done. 
+
+4. Dandelion 2015 - mixed data in one of the date cells... A bitch to disentangle programmatically, ha. 
+
+5. OK, dandelion 2016. Had to remove a whole "funding period", not sure how this works!
+
+6. Tried to dabble with moving averages, but got a bit too intense..
+
+7. OK, Dandelion 2017
+
 

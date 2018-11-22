@@ -40,10 +40,11 @@ Rows do not correspond to unique cases, which would ideally be individual clinic
   + *venue*
   + (also additional information about cost sharing?)
 * *amount* / date funding reveiced
-+ there are amounts in Ksh and £, additionally also apportionment of money sometimes?
-  + if there are two rows per 'case', not clear if this is to do with the individual grants?
-  
-  #### Mobilizaiton, Education
+  + there are amounts in Ksh and £, additionally also apportionment of money sometimes?
+  + if there are two or three rows per 'case', not clear if this is to do with the individual grants?
+* Does this mean there are funding periods for which the grants apply?
+
+#### Mobilizaiton, Education
   
   This category of variables seems to only exist in the CHAT files. 
 
@@ -121,5 +122,18 @@ Issues:
 * *Health services only* - derived from primary health care, TB contacts traced and HIV tests, and deworming and immunization when available - sum of people treated?
 * *Health & Family planning* - derived sum total family planning and health services. 
 
+
+## Data janitor work
+
+### Dandelion
+
+Looks overall to be a consistently processed worksheet:
+
+* 2014-2018 i.e. five worksheets with same number of columns
+* subtotals and totals need to be removed
+* funding variable needs to be manually split into three variables
+* In 2015 sheet, the last funding period date also says "PopOff" in the same cell.
+* In the 2016 sheet, the last funding period doesn't have a date, but has a euro value instead...
+* I remove the euro value and have a missing date. Actually no, I'll remove this whole funding period "Amplify change". 
 
 

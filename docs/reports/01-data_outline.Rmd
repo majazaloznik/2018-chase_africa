@@ -134,6 +134,9 @@ Looks overall to be a consistently processed worksheet:
 * funding variable needs to be manually split into three variables
 * In 2015 sheet, the last funding period date also says "PopOff" in the same cell.
 * In the 2016 sheet, the last funding period doesn't have a date, but has a euro value instead...
-* I remove the euro value and have a missing date. Actually no, I'll remove this whole funding period "Amplify change". 
-
-
+* I remove the euro value and have a missing date in 2016. Actually no, I'll remove this whole funding period "Amplify change". Actually, no, I've added it back and added a column on "fund_category" distinguishing between standard and others.  
+* In 2017 there an Amboseli vs standard clinic distinction. Annoyingly one of them only has 2 rows, but the funding data is in three.. 
+* ERROR: In 2018 the Pills column is split into 6, 3, or one month. Looking at the CYP factors in the previous sheets it looks like the previous columns were for single month? BUT that means the "All years" total sheet has it wrong, since it adds the 2018 data into the same column as the previous years, even though in 2018 it's all 3 month. So either it should be in a different column, or the previous four sheets give the pill the wrong factor! 
+* I will assume that the pills for the first four sheets are monthly. 
+* QUESTION: in 2019 there is a new column "Basic Healthcare", which is probably the same as "Primary Healthcare" in the previous sheets? I will assume that it is.
+* Also in 2018 Now cancer is split into test and positive. I am assuming that the previous years was testing, not another variable?

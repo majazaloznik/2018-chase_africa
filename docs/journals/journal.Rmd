@@ -46,4 +46,26 @@ knitr::include_graphics(paste0(rprojroot::find_root("Makefile"),"/figures/make.p
 
 7. OK, Dandelion 2017
 
+# Friday 23.11.2018
+
+1. Hmm, should I actually keep the odd ones, the weird funders? I mean in the end they will presumably be still in the analysis, so I might as well sort this out now...
+
+2. OK, back to 2016 and add "amplify change" back in. 
+
+3. And back to 2017 with Amboseli added in. 
+
+4. 2018 now. Found error in pills CYP in the final sheet. 
+
+5. OK, all data together now. Start row bind with 2018 dataframe, just to keep the columns in that order, since there are most in that table. 
+
+6. Now sort by date. 
+
+7. Now update makefile. I really need to start doing this earlier, not later!
+
+8. Update readme
+
+9. TODO:
+
+* prepare presentation folder/gh_pages
+* group data monthly?
 

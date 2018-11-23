@@ -18,6 +18,15 @@ RPRT:= $(DOC)/reports
 
 # FILES #######################################################################
 
+# all excel raw files
+xlsx:= $(DT/R)/*.xlsx
+
+# all human readable outputs
+csvz:= $(DT/P)/*.csv
+
+# all rds readable outputs
+rdsz:= $(DT/P)/*.rds
+
 # all interim data filee
 DT/I/.rds :=  $(DT/I)/*.rds
 
@@ -86,7 +95,7 @@ endef
 # DEPENDENCIES   ##############################################################
 ###############################################################################
 
-all: journal readme dot outline
+all: journal readme dot outline rdsz
 
 .PHONY: all
 
@@ -126,11 +135,21 @@ $(RPRT)/01-data_outline.pdf:  $(RPRT)/01-data_outline.Rmd
 # README from Rmds #############################################################
 readme: README.html
 
-README.html: README.md 
+README.html: README.md $(FIG)/make.png
 	$(rmd2html)
 
 
+# DATA ANALYSIS ###############################################################
+rdsz: $(rdsz)
 
+# dependency 
+$(csvz): $(CODE)/01-clean_up.R 
 
+# clean data 
+$(rdsz): $(CODE)/01-clean_up.R 
+	Rscript -e "source('$<')"
+
+# dependency
+$(CODE)/01-clean_up.R: $(xlsx)
 
 

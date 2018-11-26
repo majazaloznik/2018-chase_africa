@@ -15,6 +15,7 @@ DT/I:= $(DATA)/interim
 DOC:= $(DIR)/docs
 JRN:= $(DOC)/journals
 RPRT:= $(DOC)/reports
+PREZ:= $(DOC)/presentations
 
 # FILES #######################################################################
 
@@ -95,7 +96,7 @@ endef
 # DEPENDENCIES   ##############################################################
 ###############################################################################
 
-all: journal readme dot outline rdsz
+all: journal readme dot outline rdsz prezi
 
 .PHONY: all
 
@@ -138,6 +139,14 @@ readme: README.html
 README.html: README.md $(FIG)/make.png
 	$(rmd2html)
 
+
+# presentations ################################################################
+prezi: $(PREZ)/2018-12-04-chase_africa-first_cut.html
+
+# presentation render to  html 
+$(PREZ)/2018-12-04-chase_africa-first_cut.html:  $(PREZ)/2018-12-04-chase_africa-first_cut.Rmd   $(rdsz)
+	$(rmd2html)
+	
 
 # DATA ANALYSIS ###############################################################
 rdsz: $(rdsz)

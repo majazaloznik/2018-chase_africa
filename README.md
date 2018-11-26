@@ -8,6 +8,10 @@ The non-academic partner is [Community Health and Sustainable Environment (CHASE
 
 At the present time I do not have permission to publicly share the data, but hopefully this will be possible in the future. 
 
+# Presentations
+
+1. The first presentation on preliminary data analysis prepared for the 4.12.2018 meeting is [available here](https://majadaloznik.github.io//2018-chase-afica/presentations/2018-12-04-chase_africa-first_cut.html)
+
 # Technical 
 
 Here's the current makefile structure of this repo

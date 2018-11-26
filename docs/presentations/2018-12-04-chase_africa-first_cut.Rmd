@@ -1,0 +1,22 @@
+---
+title: "Chase Africa & Oxford Institute of Population Ageing "
+subtitle: "Mini Knowledge Acceleration Fellowship" 
+
+date: "04/12/2018"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      countIncrementalSlides: false
+---
+
+
+
+background-image: url("figures/page-header-3.jpg")
+
+### The impact of integrated healthcare and family planning services in marginalised communities in rural areas in Kenya and Uganda 
+
+
+---
+
+## Outline 

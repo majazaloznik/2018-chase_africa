@@ -69,3 +69,8 @@ knitr::include_graphics(paste0(rprojroot::find_root("Makefile"),"/figures/make.p
 * prepare presentation folder/gh_pages
 * group data monthly?
 
+# Monday 26.11.2018
+
+1. Preapre presentation folder/gh_pages.. xaringan, right?
+
+2. ALso update readme and add to makefile

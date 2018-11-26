@@ -96,7 +96,7 @@ endef
 # DEPENDENCIES   ##############################################################
 ###############################################################################
 
-all: journal readme dot outline rdsz prezi
+all: journal readme dot rdsz prezi reports
 
 .PHONY: all
 
@@ -125,12 +125,15 @@ $(JRN)/journal.html:  $(JRN)/journal.Rmd
 	$(rmd2html)
 
 # data outline from Rmds ###########################################################
-outline: $(RPRT)/01-data_outline.pdf 
-
+reports: $(RPRT)/01-data_outline.pdf $(RPRT)/02-preliminary_data_analysis.pdf
+ 
 # journal (with graph) render to  pdf
 $(RPRT)/01-data_outline.pdf:  $(RPRT)/01-data_outline.Rmd 
 	$(rmd2pdf)
 
+# journal (with graph) render to  pdf
+$(RPRT)/02-preliminary_data_analysis.pdf:  $(RPRT)/02-preliminary_data_analysis.Rmd  $(rdsz)
+	$(rmd2pdf)
 
 	
 # README from Rmds #############################################################

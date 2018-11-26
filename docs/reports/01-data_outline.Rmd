@@ -9,7 +9,7 @@ output:
 
 # Files and sheets
 
-Seven files of annual and all year data summaries for seven different projects?
+Six files of annual and all year data summaries for six different projects?
   
 * `2012-18 CHAT data summary CP.xlsx` -- 7 annual sheets + summary sheet
 * `2014-18 Dandelion data summary & CYP CP.xlsx`-- 5 annual sheets + summary sheet
@@ -22,7 +22,7 @@ The MKT data sheets additionally have some vehicle contribution payment schedule
 
 The CHV data sheets additionally have a pre-chase data sheet?
   
-  Overall structure seems similar: over the years the tables become more detailed, include more columns, the final ones are most complete.
+Overall structure seems similar: over the years the tables become more detailed, include more columns, the final ones are most complete.
 
 Some calculations are made using formulas in the sheets, not all though. 
 

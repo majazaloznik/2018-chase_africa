@@ -1,0 +1,39 @@
+---
+title: "Chase Africa"
+subtitle: "Preliminary Analysis"
+author: "Maja Zalžnik"
+date: "4.12.2018"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+---
+
+
+
+# Introduction
+
+This material has beem prepared for the introductory meeting between Chase Africa and the Institute of Population Ageing at the start of our collaboration funded by GCRF NGO Secondary Data Funding in the form of a Mini knowledge exchange fellowship. 
+
+It is based on a preliminary analysis of part of the data supplied by Chase Africa and aims to outline and demonstrate some of the possibilities that the data afford. 
+
+# Data 
+
+Chase Africa has provided six Excel formatted datasets, one for each charity in Kenya or Uganda that they support: 
+
+* `2012-18 CHAT data summary CP.xlsx` -- 7 annual sheets + summary sheet
+* `2014-18 Dandelion data summary & CYP CP.xlsx`-- 5 annual sheets + summary sheet
+* `2014-18 MKT data summary & CYP CP.xlsx` -- 5 annual sheets + summary sheet
+* `Big Life data summary & CYP CP.xlsx` -- 2 annual sheets + summary sheet
+* `CHV data summary & CYP CP.xlsx` - 3 annual sheets + summary sheet
+* `RICE WN Data summary & CYP CP.xlsx`-- 1 annual sheet + summary sheet
+
+For the purposes of this demonstration only data from *Dandelion* is used for the years 2014-2018. The data has been cleaned and consolidated into a single data table. The original variables are listed in the appendix, as are the new, derived variables. The variables fall into the following categories:
+
+* `id` variables such as `date`, and `venue`
+* `fund_` variables have been extracted from the single column in the excel files and include `fund_date`, `fund_round`, `fund_gbp`, `fund_ksh`, and `fund_category` that acounts for non-standard sources such as Amboseli or Amplify change.
+* `fp_` variables are to do with family planning provision and are further split into `fp_lt_` and `fp_st_` for long and short term contraception. 
+* `ihs_` variables refer to integrated health care services
+* `der_` are variables derived from the basic variables listed above (if they had already been calculated in the original excel files, they are still re-calculated). 
+

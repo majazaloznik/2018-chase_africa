@@ -73,4 +73,13 @@ knitr::include_graphics(paste0(rprojroot::find_root("Makefile"),"/figures/make.p
 
 1. Preapre presentation folder/gh_pages.. xaringan, right?
 
-2. ALso update readme and add to makefile
+2. ALso update readme and add to makefile.
+
+3. OK, now what to do with the data. Should I have a look at another dataset? No, keep it simple and do dandelion only.
+
+4. Start preliminary analysis report. 
+
+5. Rename variables so they are fp_ family planning, ihs for integrated health services and fund for funding related stuff. 
+
+6. Derive totals for family planning and check with the ones in the excel spreadsheet - correct. 
+7. Derive CYP totals 

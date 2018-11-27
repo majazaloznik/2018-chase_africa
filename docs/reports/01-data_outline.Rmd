@@ -140,3 +140,8 @@ Looks overall to be a consistently processed worksheet:
 * I will assume that the pills for the first four sheets are monthly. 
 * QUESTION: in 2019 there is a new column "Basic Healthcare", which is probably the same as "Primary Healthcare" in the previous sheets? I will assume that it is.
 * Also in 2018 Now cancer is split into test and positive. I am assuming that the previous years was testing, not another variable?
+* Some cells in the excel tables are empty instead of having zeros. Are these different? I will treat them as zeros here, not NAs, but this needs to be confirmed. 
+* Formula copy paste error: 2016 the CYPs from August onwards do not take into account IUCDs. 
+* More error: In all of 2017 the IUCD are counted as 3.3 instead of 4.6 as they are everywhere else. 
+* Inconsistency - order of last two columns in 2018 is switched compared to others. Not error though. 
+* Error: in 2015 the total health care formula included the HIV positive people i.e. double counted them. 

@@ -82,4 +82,46 @@ knitr::include_graphics(paste0(rprojroot::find_root("Makefile"),"/figures/make.p
 5. Rename variables so they are fp_ family planning, ihs for integrated health services and fund for funding related stuff. 
 
 6. Derive totals for family planning and check with the ones in the excel spreadsheet - correct. 
+
 7. Derive CYP totals 
+
+# Tuesday 27.11.2018
+
+1. Fix NAs e.g. in 2015 pills. 
+
+2. Makefile: interim data and transform data script. 
+
+3. OK, derive CYP total, as well as sub totals. Compare with original version. 71 are the same and the other 81 are not.. But that's not my error, it's theirs since they had teh CYP conversion factors entered in wrong. 
+
+4. There are two more totals, IHS and IHS+FP together, do those and double check. In order to do those need to rename the `ihs_`variables. And careful to not count positive tests as people.. One check revealed swapped columns in 2018. other check revealed: in 2017 the total IHC formula included the hiv pozitives. 
+
+5. Now figure out smoothing lines - I guess in ggplot if I want to use gganimate..
+
+6. But maybe first add summaries per funding round. OK
+
+7. No, even before, add the list of variables to the appendix. OK
+
+8. Now update makefile. OK
+
+9. Now back to summaries per year and per round. How do you do this: different groups of variables need different funcitons: some sum, some mean, some max, some first(). OK, what di I realy want to do:
+
+First by funding round:
+
+* drop date and venue
+* sum the next 28 variables. 
+* first the five funding variables - although one is the grouping one. 
+* sum all the remaining variables. 
+
+OK, so sum all non-funding variables. Do that using mutate, then summarise. 
+
+10. Now need cost per person and cost per Couple Year protection. OK, GBP per FP person checks out with the Excel data. And CYP as well - well, except for the CYPs that were wrong in the Excel files. And I assume the Ksh are correct as well, although only checked a few. 
+
+11. Now summarise by year and by funding round. Careful that the cost per person or per CYP is calculated correctly as well. 
+
+12. Only issue with summaries is that they include the non-standard funding rounds. Maybe I can have a look at what happens without them? Meh, actually, let's not complicate things. But I left the code in. 
+
+13. Now smoothing lines in ggplot2
+
+14. check if kable can't have a bit more pzzaz? Done
+
+15. OK< plots, set up makefile. 

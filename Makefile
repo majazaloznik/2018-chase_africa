@@ -17,13 +17,19 @@ JRN:= $(DOC)/journals
 RPRT:= $(DOC)/reports
 PREZ:= $(DOC)/presentations
 
+P-FIG:= $(PREZ)/figures
 # FILES #######################################################################
+
+figz:= $(P-FIG)/*.*
 
 # all excel raw files
 xlsx:= $(DT/R)/*.xlsx
 
 # all human readable outputs
 csvz:= $(DT/P)/*.csv
+
+# all rds readable outputs
+interim:= $(DT/I)/*.rds
 
 # all rds readable outputs
 rdsz:= $(DT/P)/*.rds
@@ -96,7 +102,7 @@ endef
 # DEPENDENCIES   ##############################################################
 ###############################################################################
 
-all: journal readme dot rdsz prezi reports
+all: journal readme dot prezi reports
 
 .PHONY: all
 
@@ -125,14 +131,14 @@ $(JRN)/journal.html:  $(JRN)/journal.Rmd
 	$(rmd2html)
 
 # data outline from Rmds ###########################################################
-reports: $(RPRT)/01-data_outline.pdf $(RPRT)/02-preliminary_data_analysis.pdf
+reports: $(RPRT)/01-data_outline.pdf $(RPRT)/02-preliminary_data_analysis.pdf 
  
 # journal (with graph) render to  pdf
 $(RPRT)/01-data_outline.pdf:  $(RPRT)/01-data_outline.Rmd 
 	$(rmd2pdf)
 
 # journal (with graph) render to  pdf
-$(RPRT)/02-preliminary_data_analysis.pdf:  $(RPRT)/02-preliminary_data_analysis.Rmd  $(rdsz)
+$(RPRT)/02-preliminary_data_analysis.pdf:  $(RPRT)/02-preliminary_data_analysis.Rmd  $(rdsz) $(figz)
 	$(rmd2pdf)
 
 	
@@ -147,18 +153,30 @@ README.html: README.md $(FIG)/make.png
 prezi: $(PREZ)/2018-12-04-chase_africa-first_cut.html
 
 # presentation render to  html 
-$(PREZ)/2018-12-04-chase_africa-first_cut.html:  $(PREZ)/2018-12-04-chase_africa-first_cut.Rmd   $(rdsz)
+$(PREZ)/2018-12-04-chase_africa-first_cut.html:  $(PREZ)/2018-12-04-chase_africa-first_cut.Rmd  $(figz)
 	$(rmd2html)
 	
 
 # DATA ANALYSIS ###############################################################
-rdsz: $(rdsz)
 
-# dependency 
-$(csvz): $(CODE)/01-clean_up.R 
+
+# plot figures
+$(figz): $(CODE)/03-plotting.R
+	Rscript -e "source('$<')"
+# dependency
+$(CODE)/03-plotting.R: $(rdsz)
+
+# transform data
+$(rdsz): $(CODE)/02-transform_data.R
+	Rscript -e "source('$<')"
+# dependency
+$(csvz): $(CODE)/02-transform_data.R 
+
+# dependency
+$(CODE)/02-transform_data.R: $(interim)
 
 # clean data 
-$(rdsz): $(CODE)/01-clean_up.R 
+$(interim): $(CODE)/01-clean_up.R 
 	Rscript -e "source('$<')"
 
 # dependency

@@ -29,7 +29,30 @@ Chase Africa has provided six Excel formatted datasets, one for each charity in 
 * `CHV data summary & CYP CP.xlsx` - 3 annual sheets + summary sheet
 * `RICE WN Data summary & CYP CP.xlsx`-- 1 annual sheet + summary sheet
 
-For the purposes of this demonstration only data from *Dandelion* is used for the years 2014-2018. The data has been cleaned and consolidated into a single data table. The original variables are listed in the appendix, as are the new, derived variables. The variables fall into the following categories:
+For the purposes of this demonstration only data from *Dandelion* is used for the years 2014-2018 [^1]. The data has been cleaned and consolidated into a single data table. 
+The original variables are listed in the appendix, as are the new, derived variables. 
+
+[^1]: All the analysis was performed on all the clinic types i.e. standard and Amboseli as well as Amplify change.  
+
+The data is made *tidy*: 
+
+* each variable forms a single column
+* each observation forms a row: a date-venue combination
+
+All derived variables are derived anew, to avoid the possibility of errors inherent in Excel-style cell formulae, and additional variables are derived as well. 
+
+Finally summary statistics are calculated by year and by *funding period* to allow a less granular overview of the trends. 
+
+# Analysis
+
+# Simple time series
+
+
+
+
+# Appendix {-}
+
+The variables fall into the following categories:
 
 * `id` variables such as `date`, and `venue`
 * `fund_` variables have been extracted from the single column in the excel files and include `fund_date`, `fund_round`, `fund_gbp`, `fund_ksh`, and `fund_category` that acounts for non-standard sources such as Amboseli or Amplify change.
@@ -37,3 +60,19 @@ For the purposes of this demonstration only data from *Dandelion* is used for th
 * `ihs_` variables refer to integrated health care services
 * `der_` are variables derived from the basic variables listed above (if they had already been calculated in the original excel files, they are still re-calculated). 
 
+```{r echo = FALSE}
+library(kableExtra)
+var_list <- readRDS(here::here("data/processed/var_list.rds"))
+knitr::kable(var_list, "latex", longtable = TRUE, booktabs = TRUE) %>% 
+  kable_styling() %>% 
+  group_rows("ID", 1,2) %>% 
+  group_rows("Family Planning - Long Term", 3,7) %>% 
+  group_rows("Family Planning - Short Term", 8,13) %>% 
+  group_rows("Family Planning - Ohter", 14,18) %>% 
+  group_rows("Integrated Health Care", 19,30) %>% 
+  group_rows("Funding Information", 31,35) %>% 
+  group_rows("Numbers of recipients", 36,40) %>% 
+  group_rows("Couple Years of Protection", 41,57) %>% 
+  group_rows("Costs", 58,61)
+
+```

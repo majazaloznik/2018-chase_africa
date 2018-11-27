@@ -94,7 +94,8 @@ dandelion_2015%>%
   fill(fund_ksh, fund_date, fund_gbp) %>% 
   fill(fund_ksh, fund_date, fund_gbp, .direction = "up")  %>% 
   mutate(fund_gbp = as.numeric(fund_gbp), fund_ksh = as.numeric(fund_ksh)) %>% 
-  select(-del) -> dandelion_2015
+  select(-del) %>% 
+  mutate(fp_st_pills_1mth =ifelse(is.na(fp_st_pills_1mth), 0, fp_st_pills_1mth) ) -> dandelion_2015
 
 
 # import sheet 3 ##############################################################
@@ -224,7 +225,7 @@ dandelion_2018 <- read_excel("data/raw/2014-18 Dandelion data summary & CYP CP .
                                                                                               "fp_under18",
                                                                                               "fp_over18",
                                                                                               "lt_iucd_remove",
-                                                                                              "fp_disabled",
+                                                                                              "disabled_fp",
                                                                                               "ihs_primary_hc",
                                                                                               "ihs_deworming",
                                                                                               "ihs_immunization",
@@ -236,10 +237,10 @@ dandelion_2018 <- read_excel("data/raw/2014-18 Dandelion data summary & CYP CP .
                                                                                               "ihs_cancer_poz",
                                                                                               "ihs_hepB_test",
                                                                                               "ihs_hepB_poz",
-                                                                                              "ihs_disabled",
-                                                                                              "der_total_fp_ihc",
-                                                                                              "der_total_ihc"))
-# basic clean up of sheet 5
+                                                                                              "disabled_ihc",
+                                                                                              "der_total_ihc",
+                                                                                              "der_total_fp_ihc"))
+# basic clean up of sheet 5 
 # remove rows that are not clinics
 dandelion_2018 %>% 
   filter(!is.na(date))  %>% 
@@ -266,5 +267,4 @@ bind_rows(dandelion_2018,
   ungroup() %>% 
   arrange(date) -> dandelion
 
-saveRDS(dandelion, "data/processed/dandelion.rds")
-write_csv(dandelion, "data/processed/dandelion.csv")
+saveRDS(dandelion, "data/interim/dandelion.rds")

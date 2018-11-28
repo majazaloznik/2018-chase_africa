@@ -25,4 +25,8 @@ background-image: url("figures/page-header-3.jpg")
 
 ---
 
-## 
+## Analysis - Simple Time Series
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/fp_lt_3yr.gif")
+```

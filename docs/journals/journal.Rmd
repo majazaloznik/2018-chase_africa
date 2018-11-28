@@ -125,3 +125,8 @@ OK, so sum all non-funding variables. Do that using mutate, then summarise.
 14. check if kable can't have a bit more pzzaz? Done
 
 15. OK< plots, set up makefile. 
+
+16. Start with gganimate, but it requries transformr apparently, and i'm on a train. 
+
+17. WHen I get to the plots, the zeros and missing are not great.. If it's an NA it shouldn't actuallly register as a zero. But that's what they have been entered in - albeit oddly, they look like dashes, but register as zeros?!
+

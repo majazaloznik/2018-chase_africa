@@ -10,11 +10,12 @@ output:
       countIncrementalSlides: false
 ---
 
-
-
-background-image: url("figures/page-header-3.jpg")
-
 ### The impact of integrated healthcare and family planning services in marginalised communities in rural areas in Kenya and Uganda 
+```{r echo = FALSE}
+knitr::include_graphics("figures/page-header-3.jpg")
+```
+
+
 
 
 ---

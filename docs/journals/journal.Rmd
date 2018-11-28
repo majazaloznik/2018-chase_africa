@@ -130,3 +130,22 @@ OK, so sum all non-funding variables. Do that using mutate, then summarise.
 
 17. WHen I get to the plots, the zeros and missing are not great.. If it's an NA it shouldn't actuallly register as a zero. But that's what they have been entered in - albeit oddly, they look like dashes, but register as zeros?!
 
+# Wednesday 28.11.2018
+
+1. Presentation stopped working there, but then started again... Phew, patience with gh_pages!
+
+2. OK, somehow i don't know how to write a function for a ggplot chart - the variables are not passed ok!? But don't have time for that now. 
+
+3. Also with pdf figure size and dpi don't seem to be combinable as they are with html. So font size changed manually. Let's add a few more simple time series. 
+
+4. Also set fig.size globally
+
+5. Also yesterday I used a trick to force floats to "H" bu Yihue, that said that the option to force "H" only works if you have a caption and have at least `out.extra` defined [here](https://stackoverflow.com/questions/42486617/knitr-ignoring-fig-pos/43245550#43245550). 
+
+6. OK, now aggregates, by round and by year. 
+
+7. Missing two round dates, well one really, made it up!
+
+8. OK, barplot, now i need to gather the df, apparently that's the only way.. 
+
+9. Then massive sidetracking trying to figure out how to have two discrete scales: one for the variable and the other to distinguish the fact that 2018 is incomplete. Which you can't do with alpha, since it only affects fill, not the border apparnenlty..

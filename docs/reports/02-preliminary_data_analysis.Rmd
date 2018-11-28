@@ -8,12 +8,16 @@ output:
     toc: true
     toc_depth: 3
     number_sections: true
+    fig_caption: yes
 ---
+
+***
+
 ```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.pos = 'H')
+knitr::opts_chunk$set(fig.pos = 'H',fig.width=6, fig.height=3.3)
 ```
 
-```{r echo = FALSE, warnings = FALSE}
+```{r echo = FALSE, warnings = FALSE, message=FALSE}
 library(dplyr)
 library(tidyr)
 library(ggplot2)
@@ -30,6 +34,7 @@ This material has been prepared for the introductory meeting between Chase Afric
 
 It is based on a preliminary analysis of part of the data supplied by Chase Africa and aims to outline and demonstrate some of the possibilities that the data afford. 
 
+*** 
 # Data 
 
 Chase Africa has provided six Excel formatted datasets, one for each charity in Kenya or Uganda that they support: 
@@ -55,69 +60,208 @@ All derived variables are derived anew, to avoid the possibility of errors inher
 
 Finally summary statistics are calculated by year and by *funding period* to allow a less granular overview of the trends. 
 
+*** 
 # Analysis
 
 ## Simple time series
 
-Each of the raw variables on service delivery under the family planning and integrated health services headings can be plotted as a simple time series. 
+Each of the raw variables on service delivery under the family planning and integrated health services headings can be plotted as a simple time series. Figure \ref{fig:01} shows the simple time series of 5-year implant delivery, both as first time and repeated. 
 
-```{r, echo = FALSE, fig.cap= "Simple time series of implant delivery", out.extra = '',fig.height = 4, fig.width = 6}
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:01}Simple time series of 5-year implant delivery (Dandelion: 2014 - 2018)", out.extra = ''}
 ggplot(df, aes(date, fp_lt_5yr_1st+fp_lt_5yr_rep)) +
   geom_point() +
   geom_line() +
   # geom_smooth(method = lm, formula = y ~ splines::bs(x, 9),
   #            color = "red") +
   theme_minimal() +
-  labs(title = "5 year implants (Dandelion: 2014 - 2018)",
-       x = "Date",
-       y = "Number of persons treated")
+  labs(x = "Date of clinic",
+       y = "Number of persons treated")+
+  theme(text = element_text(size=8))
 
 ```
 
-```{r, echo = FALSE, fig.cap= "Simple time series of deworming", out.extra = '', fig.height = 4, fig.width = 6}
+Figure 2 plots another one of the family planning services provided, this time Depo injections, while Figure 3 shows one of the health services provided: deworming. Again the simple time series plots the number of recipients of each service in each clinic over time. 
+
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:02}Simple time series of Depo injection delivery (Dandelion: 2014 - 2018)", out.extra = ''}
+ggplot(df, aes(date, fp_st_depo_1st+fp_st_depo_rep)) +
+  geom_point() +
+  geom_line() +
+  theme_minimal() +
+  labs(x = "Date",
+       y = "Number of persons treated")+
+  theme(text = element_text(size=8))
+
+```
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:03}Simple time series of deworming", out.extra = ''}
 ggplot(df, aes(date, ihs_deworming)) +
   geom_point() +
   geom_line() +
   # geom_smooth(method = lm, formula = y ~ splines::bs(x, 9),
   #            color = "red") +
   theme_minimal() +
-  labs(title = "Deworming (Dandelion: 2014 - 2018)",
-       x = "Date",
-       y = "Number of persons treated")
+  labs(x = "Date",
+       y = "Number of persons treated")+
+  theme(text = element_text(size=8))
 
 ```
 
 
-Due to the noisiness of the data it makes sense to fit a smooth curve to the data, for example: 
+Due to the rather high levels of noisiness in the data it makes sense to try and fit a smooth curve to the data, for example using LOESS---locally estimated scatterplot smoothing as in Figure 4 which plots the time series for 3-year implant delivery or Figure 5 which plots the trend in condom uptake. 
 
 
-```{r, echo = FALSE, fig.cap= "Simple time series of 3-year implant delivery", out.extra = '',fig.height = 4, fig.width = 6}
+```{r, echo = FALSE, fig.cap= "\\label{fig:04}Simple time series of 3-year implant delivery with LOESS curve (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE}
 ggplot(df, aes(date, fp_lt_3yr_1st+fp_lt_3yr_rep)) +
   geom_point() +
   geom_line() +
-  geom_smooth(method = lm, formula = y ~ splines::bs(x, 9),
-              color = "red") +
+  geom_smooth(span = 0.3, color = "red") +
   theme_minimal() +
-  labs(title = "3 year implants (Dandelion: 2014 - 2018)",
-       x = "Date",
-       y = "Number of persons treated")
+  labs(x = "Date",
+       y = "Number of persons treated") +
+  theme(text = element_text(size=8))
 
 ```
 
+```{r, echo = FALSE, fig.cap= "\\label{fig:05}Simple time series of condom delivery with LOESS curve (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE}
+ggplot(df, aes(date, fp_condoms)) +
+  geom_point() +
+  geom_line() +
+  geom_smooth(span = 0.3, color = "red") +
+  theme_minimal() +
+  labs(x = "Date",
+       y = "Number of persons treated") +
+  theme(text = element_text(size=8))
+
+```
+
+Smoothing should be interpreted carefully though, as it uses a *sliding window* to calculate the best fit, and we can use the size or span of this window to affect how smooth or wiggly we want the curve to be. Figure 6 uses delivery of HIV testing to demonstrate this by plotting a curve with a large span (in blue) and one with a narrower span (red): 
 
 
-```{r, echo = FALSE, fig.cap= "Simple time series of HIV test delivery", out.extra = '',fig.height = 4, fig.width = 6}
+```{r, echo = FALSE, fig.cap= "\\label{fig:06}Simple time series of HIV test delivery with LOESs curve (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE}
 ggplot(df, aes(date, ihs_hiv_test)) +
   geom_point() +
   geom_line() +
-  geom_smooth(method = lm, formula = y ~ splines::bs(x, 9),
-              color = "red") +
+  geom_smooth(span = 0.2, color = "red", se = FALSE) +
+  geom_smooth(span = 0.5, color = "blue", se = FALSE) +
   theme_minimal() +
-  labs(title = "HIV tests conducted (Dandelion: 2014 - 2018)",
-       x = "Date",
-       y = "Number of persons treated")
+  labs(x = "Date",
+       y = "Number of persons treated")+
+  theme(text = element_text(size=8))
+```
+
+## Aggregated time series
+
+Due to the nature of the data collection it might be more reasonable to group the clinics together into *funding rounds*, which are groups of 3-15 clinics that are recorded as being funded from a single grant. For example we can compare the total recipients of long term (red) and short term contraceptives (blue) across all the funding periods in Figure \ref{fig:07}.
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:07}Aggregated time series of recipients of long term and short term contraceptives (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE}
+
+ggplot(df_rounds, aes(fund_date)) +
+  geom_line(aes(y = der_fp_lt_total, colour = "Long term")) + 
+  geom_point(aes(y = der_fp_lt_total, colour = "Long term")) + 
+  geom_line(aes(y = der_fp_st_total, colour = "Short term")) +
+  geom_point(aes(y = der_fp_st_total, colour = "Short term")) +
+  scale_color_manual(values = c("red", "blue"), name = "Contraceptive type") +
+  theme_minimal() +
+  labs(x = "Date of funding round",
+       y = "Number of persons treated")+
+  theme(text = element_text(size=8))
+```
+
+
+However the problem with this chart, as with the previous simple time series ones, is that clinics and funding periods are not regularly spaced, so the charts don't give a reliable overview of the overall trends. Using the funding rounds makes sense for when we look at costs though, so we will return to them further down. 
+
+But looking at overall trends perhaps the best option is to look at annual changes. Figure \ref{fig:08} summarises the same data as Figure \ref{fig:07} on recipients of long and short term contraceptives, this time looking at the data annually. A quick overview of the individual family planning methods is shown in  Figure \ref{fig:09}. [^2]
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:08}Annualy aggregated time series of recipients of long term and short term contraceptives  (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE, fig.height = 3.1}
+
+df_years %>% 
+  select(year, der_fp_lt_total, der_fp_st_total) %>% 
+  gather(key = var, value = freq, 2:3) %>% 
+  ggplot(aes( x = year, y = freq, col = var)) +
+  geom_bar(width = 0.4, stat = "identity", position = position_dodge(0.5),fill = "white",
+           aes(color = as.factor(var), size = as.factor(year))) +
+  scale_color_manual(values = c("red", "blue"), labels = c("Long term", "Short term"), 
+                     name = "Contraceptive type") +
+  scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
+  theme_minimal() +
+  labs(x = "Year",
+       y = "Number of persons treated")+
+  theme(text = element_text(size=8))
+```
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:09}Annualy aggregated time series of recipients of all family planning services  (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE}
+df_years %>% 
+  select(year, starts_with("fp")) %>% 
+  mutate(fp_lt_5yr = fp_lt_5yr_1st + fp_lt_5yr_rep,
+         fp_lt_3yr = fp_lt_3yr_1st + fp_lt_3yr_rep,
+         fp_st_depo = fp_st_depo_1st + fp_st_depo_rep) %>% 
+  select(-fp_condoms, -fp_lt_5yr_1st, -fp_lt_5yr_rep, 
+         -fp_lt_3yr_1st, -fp_lt_3yr_rep, 
+         -fp_st_depo_1st, -fp_st_depo_rep) %>% 
+  gather(key = var, value = freq, 2:11) %>% 
+  filter(!is.na(freq))  %>% 
+  mutate(var = factor(var, labels = c("3 year implant", "5 year implant", "IUCD",
+                                        "Depo injection", "Pills 1 month", "Pills 3 months"))) %>% 
+  ggplot(aes(x = year, y = freq)) +
+  geom_bar(width = 0.4, stat = "identity", position = position_dodge(0.5), color = "red", fill = "white",
+           aes( size = as.factor(year))) +
+  facet_wrap("var") +
+  scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
+  theme_minimal() +
+  labs(x = "Year",
+       y = "Number of persons treated")+
+  theme(text = element_text(size=8))
+``` 
+
+[^2]:  Because the 2018 data is still incomplete, last two bars are drawn thinner to make that clear.  
+
+## Couple Years of Protection Analysis
+
+Using the amounts of funding for each funding period and the standard conversion factors for each type of contraceptive we can calculate the cost of *Couple years of protection* (in GBP) and see how it has varied over the funding rounds in Figure \ref{fig:10}.
+
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:10}Cost (in GBP) of couple year of protection provided (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE}
+df_rounds %>% 
+  ggplot(aes(fund_date, der_gpb_per_cyp)) +
+  geom_point() +
+  geom_line() +
+    theme_minimal() +
+  labs(x = "Date of funding round",
+       y = "GBP per CYP")+
+  theme(text = element_text(size=8))
 
 ```
+
+Using CYP we can also investigate how the shares of different type of contraceptives have changed over time in terms of how many CYPs they provide: 
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:11}Contribution to total CYP provided by each contraceptive type (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE}
+
+df_rounds %>% 
+  select(fund_date,
+         der_fp_lt_iucd_cyp,
+         der_fp_implants_tot_cyp,
+         der_fp_depo_tot_cyp,
+        der_fp_pills_tot_cyp) %>% 
+  gather(key = contr_type, value = cyp, 2:5) %>% 
+  group_by(fund_date) %>% 
+  mutate(prop.cyp = cyp/sum(cyp)) %>% 
+  arrange(fund_date) %>% 
+  ggplot(aes(x = fund_date, y = prop.cyp)) +
+  geom_line(aes(color = contr_type)) + 
+  geom_point(aes(color = contr_type)) + 
+scale_color_manual(values = c("red", "blue", "goldenrod2", "forestgreen"),
+                   labels = c("Depo injections", "Implants", "IUCDs", "Pills"),
+                           name = "Contraceptive type") +
+  theme_minimal() +
+  labs( x = "Date of funding round",
+       y = "Proportion of total CYP provided")+
+  theme(text = element_text(size=8))
+  
+  
+```
+\newpage
 # Appendix {-}
 
 The variables fall into the following categories:

@@ -6,11 +6,46 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(gganimate)
+library(transformr)
+
 
 # read data
 df <- readRDS("data/processed/dandelion.rds")
 df_rounds <- readRDS( "data/processed/dandelion_rounds.rds")
 df_years <- readRDS("data/processed/dandelion_years.rds")
+
+
+df %>% 
+  mutate(gr1 = 1) %>% 
+ggplot(aes(date, fp_lt_3yr_1st+fp_lt_3yr_rep, group = gr1)) +
+  geom_point() +
+  geom_line(size = 1, color = "red") +
+  theme_minimal() +
+  labs(x = "Date",
+       y = "Number of persons treated") +
+  transition_reveal(gr1, along = date) -> p
+
+animate(p, nframes = 25, renderer = gifski_renderer(loop = FALSE), width = 1000, height = 600)
+anim_save(paste0("docs/presentations/figures/", "fp_lt_3yr_line.gif"))
+
+
+df %>% 
+  mutate(gr2 = 2) %>% 
+  ggplot(aes(date, fp_lt_5yr_1st+fp_lt_5yr_rep, group = gr2)) +
+  geom_point() +
+  geom_line(size = 1, color = "blue") +
+  # background
+  geom_line(data = df %>%  mutate(gr1 = 1) , size = 1, color = "red",
+            aes(date, fp_lt_3yr_1st+fp_lt_3yr_rep, group = gr1)) +
+  theme_minimal() +
+  labs(x = "Date",
+       y = "Number of persons treated") +
+  transition_reveal(gr2, along = date) -> p
+animate(p,  nframes = 25, renderer = gifski_renderer(loop = FALSE), width = 1000, height = 600)
+
+anim_save(paste0("docs/presentations/figures/", "fp_lt_3yr_add_5yr_line.gif"))
+
+
 
 
 

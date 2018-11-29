@@ -148,4 +148,17 @@ OK, so sum all non-funding variables. Do that using mutate, then summarise.
 
 8. OK, barplot, now i need to gather the df, apparently that's the only way.. 
 
-9. Then massive sidetracking trying to figure out how to have two discrete scales: one for the variable and the other to distinguish the fact that 2018 is incomplete. Which you can't do with alpha, since it only affects fill, not the border apparnenlty..
+9. Then massive sidetracking trying to figure out how to have two discrete scales: one for the variable and the other to distinguish the fact that 2018 is incomplete. Which you can't do with alpha, since it only affects fill, not the border apparnelty..
+
+
+# Thursday 29.11.2018
+
+1. Unrelated sidetrack: apparently gganimate and patchwork do not yet work together. There is an example on the wiki of using magic to combine gganimate gifs, so that's sth to look into
+
+2. Write some notes under blog ideas about how gganimate works. OK, I think I have the gist of it.. 
+
+3. See if I know how to animate two lines on one chart, one after another? Prob not. 
+
+4. Ugh, why is this so complicated. I now can't even do the thing where one line is drawn in the background and one added.. It worked fine in the prospective ageing talk? more repex time.. 
+Christ, so it seems this works if you have separate dataframes!? FFS. And separate grouping variables. 
+

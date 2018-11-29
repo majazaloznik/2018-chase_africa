@@ -29,5 +29,13 @@ knitr::include_graphics("figures/page-header-3.jpg")
 ## Analysis - Simple Time Series
 
 ```{r echo = FALSE}
-knitr::include_graphics("figures/fp_lt_3yr.gif")
+knitr::include_graphics("figures/fp_lt_3yr_line.gif")
+```
+
+---
+
+## Analysis - Simple Time Series
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/fp_lt_3yr_add_5yr_line.gif")
 ```

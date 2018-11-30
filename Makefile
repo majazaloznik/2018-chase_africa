@@ -46,9 +46,9 @@ DT/P/.rds := $(DT/P)/*.rds
 define make2dot
 	@echo creating the .dot file from the dependencies in this makefile ----------
 	python $(DIR)/code/makefile2dot.py < $< > $@
-	sed -i 's/rankdir="BT"/rankdir="TB"/' $(DT/P)/make.dot	
+	sed -i 's/rankdir="BT"/rankdir="TB"/' $(DT/P)/make.dot
 	@echo done -------------------------------------------------------------------
-endef 
+endef
 
 # recipe to make .png file  from the dot file
 define dot2png
@@ -64,7 +64,7 @@ define rmd2pdf
 	render('$<', output_dir = '$(@D)', output_format = 'pdf_document',\
 	quiet = TRUE )"
 	-rm $(wildcard $(@D)/tex2pdf*) -fr
-endef 
+endef
 
 # recipe to knit html from first prerequisite
 define rmd2html
@@ -72,15 +72,15 @@ define rmd2html
   Rscript -e "suppressWarnings(suppressMessages(require(rmarkdown))); \
 	render('$<', output_dir = '$(@D)', output_format = 'html_document',\
 	quiet = TRUE )"
-endef 
+endef
 
 # recipe run latex with bibtex
 define tex2dvi
-	latex -interaction=nonstopmode --output-directory=$(@D) --aux-directory=$(@D) $< 
+	latex -interaction=nonstopmode --output-directory=$(@D) --aux-directory=$(@D) $<
   bibtex $(basename $@)
 	latex -interaction=nonstopmode --output-directory=$(@D) --aux-directory=$(@D) $<
   latex -interaction=nonstopmode --output-directory=$(@D) --aux-directory=$(@D) $<
-endef 
+endef
 
 # recipe run dvips for a0poster i.e. move the header file
 define dvi2ps
@@ -108,7 +108,7 @@ all: journal readme dot prezi reports
 
 
 # make chart from .dot #########################################################
-dot: $(FIG)/make.png 
+dot: $(FIG)/make.png
 
 # make chart from .dot
 $(FIG)/make.png: $(CODE)/dot2png.R $(DT/P)/make.dot
@@ -120,28 +120,28 @@ $(DT/P)/make.dot: $(DIR)/Makefile
 
 
 # journals from Rmds ###########################################################
-journal: $(JRN)/journal.html $(JRN)/journal.pdf 
+journal: $(JRN)/journal.html $(JRN)/journal.pdf
 
 # journal (with graph) render to  pdf
-$(JRN)/journal.pdf:  $(JRN)/journal.Rmd 
+$(JRN)/journal.pdf:  $(JRN)/journal.Rmd
 	$(rmd2pdf)
 
 # journal (with graph) render to  html
-$(JRN)/journal.html:  $(JRN)/journal.Rmd 
+$(JRN)/journal.html:  $(JRN)/journal.Rmd
 	$(rmd2html)
 
 # data outline from Rmds ###########################################################
-reports: $(RPRT)/01-data_outline.pdf $(RPRT)/02-preliminary_data_analysis.pdf 
- 
+reports: $(RPRT)/01-data_outline.pdf $(RPRT)/02-preliminary_data_analysis.pdf
+
 # journal (with graph) render to  pdf
-$(RPRT)/01-data_outline.pdf:  $(RPRT)/01-data_outline.Rmd 
+$(RPRT)/01-data_outline.pdf:  $(RPRT)/01-data_outline.Rmd
 	$(rmd2pdf)
 
 # journal (with graph) render to  pdf
 $(RPRT)/02-preliminary_data_analysis.pdf:  $(RPRT)/02-preliminary_data_analysis.Rmd  $(rdsz) $(figz)
 	$(rmd2pdf)
 
-	
+
 # README from Rmds #############################################################
 readme: README.html
 
@@ -152,10 +152,10 @@ README.html: README.md $(FIG)/make.png
 # presentations ################################################################
 prezi: $(PREZ)/2018-12-04-chase_africa-first_cut.html
 
-# presentation render to  html 
-$(PREZ)/2018-12-04-chase_africa-first_cut.html:  $(PREZ)/2018-12-04-chase_africa-first_cut.Rmd  $(figz)
+# presentation render to  html
+$(PREZ)/2018-12-04-chase_africa-first_cut.html:  $(PREZ)/2018-12-04-chase_africa-first_cut.Rmd  $(figz) $(PREZ)/my-theme.css
 	$(rmd2html)
-	
+
 
 # DATA ANALYSIS ###############################################################
 
@@ -170,13 +170,13 @@ $(CODE)/03-plotting.R: $(rdsz)
 $(rdsz): $(CODE)/02-transform_data.R
 	Rscript -e "source('$<')"
 # dependency
-$(csvz): $(CODE)/02-transform_data.R 
+$(csvz): $(CODE)/02-transform_data.R
 
 # dependency
 $(CODE)/02-transform_data.R: $(interim)
 
-# clean data 
-$(interim): $(CODE)/01-clean_up.R 
+# clean data
+$(interim): $(CODE)/01-clean_up.R
 	Rscript -e "source('$<')"
 
 # dependency

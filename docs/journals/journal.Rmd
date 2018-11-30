@@ -160,5 +160,29 @@ OK, so sum all non-funding variables. Do that using mutate, then summarise.
 3. See if I know how to animate two lines on one chart, one after another? Prob not. 
 
 4. Ugh, why is this so complicated. I now can't even do the thing where one line is drawn in the background and one added.. It worked fine in the prospective ageing talk? more repex time.. 
-Christ, so it seems this works if you have separate dataframes!? FFS. And separate grouping variables. 
+Christ, so it seems this works if you have separate dataframes!? FFS. And separate grouping variables. Got it. OK, that's half a blog post written.
+
+
+# Friday 30.11.2018
+
+1. OK, let's get some gifs done then. 
+
+2. See how legend's might be added to the charts - and be inside the plot, not outside. OK, sorted, figured out how to do that for two separate layers as well. But doens't work with animations apparently!?
+
+3. Repex of animation with legend. FFS, it's fine, just didn't show the extreme right in the rstudio viewer...
+
+4. OK, so now first set of gifs seems fine. 
+
+5. Update makefile to make sure all is picked up smoothly. 
+
+6. OK, now can we transition from two lines to just one? I can use transition_layers maybe, but do two lines in the first layer, 
+and only one in the second? Great, that works!
+
+7. But can I get the legend to also disappear or rather be replaced with a new one? Prob not. Anyway, I can just overlay a new gif that starts with the black single line... shesh.. 
+
+8. Can I transition between different `geom_smooth()`s? Probably not, unless I explicilty have it as a columns, that would probably be better?
+
+
+
+
 

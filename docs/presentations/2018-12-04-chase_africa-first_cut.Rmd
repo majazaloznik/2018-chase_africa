@@ -5,6 +5,7 @@ subtitle: "Mini Knowledge Acceleration Fellowship"
 date: "04/12/2018"
 output:
   xaringan::moon_reader:
+    css: ["default", "default-fonts", "my-theme.css"]
     lib_dir: libs
     nature:
       countIncrementalSlides: false
@@ -16,26 +17,57 @@ knitr::include_graphics("figures/page-header-3.jpg")
 ```
 
 
-
-
 ---
 
 ## Outline 
 
+--
+
+* Simple Time Series
+
+--
+
+* Aggregated Time Series
+
+--
+
+* Derived variables
+  + Rates
+  + Couple Years of Protection 
+
+--
+
+* Data Management
+
+--
+
+* Analysis Pipeline
 
 
 ---
 
-## Analysis - Simple Time Series
+### Analysis - Simple Time Series
 
 ```{r echo = FALSE}
 knitr::include_graphics("figures/fp_lt_3yr_line.gif")
 ```
 
+.small[3-year implant delivery (Dandelion 2014-2018)]
 ---
 
-## Analysis - Simple Time Series
+### Analysis - Simple Time Series
 
 ```{r echo = FALSE}
 knitr::include_graphics("figures/fp_lt_3yr_add_5yr_line.gif")
 ```
+
+.small[3-year and 5-year implant delivery (Dandelion 2014-2018)]
+
+---
+### Analysis - Simple Time Series
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/fp_lt_3yr_add_smooth.gif")
+```
+
+.small[3-year and implant delivery with LOESS curve (Dandelion 2014-2018)]

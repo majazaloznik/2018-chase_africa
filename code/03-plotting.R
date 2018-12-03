@@ -198,11 +198,49 @@ df_years %>%
            aes( size = as.factor(year))) +
   scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
   theme_minimal() +
+  theme(axis.text=element_text(size=18),
+        axis.title=element_text(size=20),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=20),
+        legend.justification=c(1,1),legend.position=c(1,1))+
   theme( title = element_text(size=18)) +
   labs(title = "{closest_state}") +
   labs(x = "Year",
-       y = "Number of persons treated")+
+       y = "Number of persons treated") +
   transition_states(var, transition_length = 2, state_length = 3) -> p
 
 animate(p, width = 1000, height = 600)
 anim_save(paste0("docs/presentations/figures/", "fp_all_year.gif"))
+
+# rates long to short term contraception
+
+df %>%
+  rowwise() %>%
+  mutate(prop_lt_total = der_fp_lt_total/(der_fp_lt_total+ der_fp_st_total),
+         prop_st_total = der_fp_st_total/(der_fp_lt_total+ der_fp_st_total)) %>%
+  select(date, prop_lt_total, prop_st_total) %>%
+  gather(key = var, value = freq, 2:3) -> df_sub
+
+ggplot(data = df_sub, aes( x = date, y = freq, col = var)) +
+  geom_bar(stat = "identity", aes(color = as.factor(var),  fill = as.factor(var))) +
+  geom_point(data = subset(df_sub, var == "prop_st_total"), col = "black", size = 2) +
+  geom_smooth(data = subset(df_sub, var == "prop_st_total"),
+              aes(x = date, y =  freq), col = "black", size = 1, span = 0.4, se = FALSE)   +
+  scale_color_manual(values = c(col1, col2), labels = c("Long term", "Short term"),
+                     name = "Contraceptive type") +
+  scale_fill_manual(values = c(col1, col2), labels = c("Long term", "Short term"),
+                    name = "Contraceptive type") +
+  scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
+  theme_minimal() +
+  theme(axis.text=element_text(size=18),
+        axis.title=element_text(size=20),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=20),
+        legend.justification=c(1,1),legend.position=c(1,1)) +
+  labs(x = "Date of clinic",
+       y = "Number of persons treated")+
+  theme(text = element_text(size=8)) +
+  transition_layers(transition_length = 1, layer_length = 2, from_blank = FALSE) -> p
+
+animate(p,  renderer = gifski_renderer(loop = FALSE), width = 1000, height = 600)
+anim_save(paste0("docs/presentations/figures/", "fp_lt_st_rate_clinics.gif"))

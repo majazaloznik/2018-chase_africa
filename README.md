@@ -10,7 +10,7 @@ At the present time I do not have permission to publicly share the data, but hop
 
 # Presentations
 
-1. The first presentation on preliminary data analysis prepared for the 4.12.2018 meeting is [available here](https://majadaloznik.github.io//2018-chase-afica/presentations/2018-12-04-chase_africa-first_cut.html)
+1. The first presentation on preliminary data analysis prepared for the 4.12.2018 meeting is [available here](https://majazaloznik.github.io/2018-chase_africa/)
 
 # Technical 
 

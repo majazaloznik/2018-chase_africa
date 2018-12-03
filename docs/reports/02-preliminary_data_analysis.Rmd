@@ -81,7 +81,7 @@ ggplot(df, aes(date, fp_lt_5yr_1st+fp_lt_5yr_rep)) +
 
 ```
 
-Figure 2 plots another one of the family planning services provided, this time Depo injections, while Figure 3 shows one of the health services provided: deworming. Again the simple time series plots the number of recipients of each service in each clinic over time. 
+Figure 2 plots another one of the family planning services provided, this time Depo injections, while Figure 3 shows one of the health services provided: de-worming. Again the simple time series plots the number of recipients of each service in each clinic over time. 
 
 
 ```{r, echo = FALSE, fig.cap= "\\label{fig:02}Simple time series of Depo injection delivery (Dandelion: 2014 - 2018)", out.extra = ''}
@@ -167,7 +167,7 @@ ggplot(df_rounds, aes(fund_date)) +
 ```
 
 
-However the problem with this chart, as with the previous simple time series ones, is that clinics and funding periods are not regularly spaced, so the charts don't give a reliable overview of the overall trends. Using the funding rounds makes sense for when we look at rates anda at costs though, so we will return to them in the next section. 
+However the problem with this chart, as with the previous simple time series ones, is that clinics and funding periods are not regularly spaced, so the charts don't give a reliable overview of the overall trends. Using the funding rounds makes sense for when we look at rates and at costs though, so we will return to them in the next section. 
 
 But looking at overall trends perhaps the best option is to look at annual changes. Figure \ref{fig:08} summarises the same data as Figure \ref{fig:07} on recipients of long and short term contraceptives, this time looking at the data annually. A quick overview of the individual family planning methods is shown in  Figure \ref{fig:09}. [^2]
 
@@ -200,11 +200,13 @@ df_years %>%
   gather(key = var, value = freq, 2:11) %>% 
   filter(!is.na(freq))  %>% 
   mutate(var = factor(var, labels = c("3 year implant", "5 year implant", "IUCD",
-                                        "Depo injection", "Pills 1 month", "Pills 3 months"))) %>% 
+                                      "Depo injection", "Pills 1 month", "Pills 3 months"))) %>% 
   ggplot(aes(x = year, y = freq)) +
-  geom_bar(width = 0.4, stat = "identity", position = position_dodge(0.5), color = col1, fill = col2,
-           aes( size = as.factor(year))) +
-  facet_wrap("var") +
+  geom_bar(width = 0.4, stat = "identity", position = position_dodge(0.5), color = col1,
+           aes( size = as.factor(year),alpha = as.factor(year),  fill =as.factor(year))) +
+  facet_wrap("var") +  
+  scale_fill_manual(values=c(col2, col2, col2, col2, col2),guide=F) +
+  scale_alpha_manual(values=c(1,1,1,1,.4),guide=F) +
   scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
   theme_minimal() +
   labs(x = "Year",
@@ -212,11 +214,11 @@ df_years %>%
   theme(text = element_text(size=8))
 ``` 
 
-[^2]:  Because the 2018 data is still incomplete, last two bars are drawn thinner to make that clear.  
+[^2]:  Because the 2018 data is still incomplete, last two bars are drawn more lightly to make that clear.  
 
 ## Rates
 
-If instead of looking at totals we look at rates i.e. relative numbers instead of absolute ones, we can observe trends over time at the more granular levels of individual clinics wihtout worying about their spacing. For example we can calculate the ratio of recipients of long term vs short term contraceptives, as we do in Figure \ref{fig:12}. There is naturally still a lot of noise, so we have added a LOESS curve to smooth the variation out a little bit. 
+If instead of looking at totals we look at rates i.e. relative numbers instead of absolute ones, we can observe trends over time at the more granular levels of individual clinics without worrying about their spacing. For example we can calculate the ratio of recipients of long term vs short term contraceptives, as we do in Figure \ref{fig:12}. There is naturally still a lot of noise, so we have added a LOESS curve to smooth the variation out a little bit. 
 
 ```{r, echo = FALSE, fig.cap= "\\label{fig:12} Ratio of recipients of long term and short term contraceptives in each clinic  (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE, fig.height = 2.9}
 df %>% 
@@ -342,7 +344,26 @@ df_rounds %>%
 
 ```
 
-Using CYP we can also investigate how the shares of different type of contraceptives have changed over time in terms of how many CYPs they provide: 
+Again, we can aggregate these data to remove the noise and look at how the cost of a couple year of protection has changed over the years, as we have in Figure \ref{fig:16}:
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:16}Cost (in GBP) of couple year of protection provided (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE}
+df_years %>% 
+  ggplot(aes(x = year, y = der_gpb_per_cyp)) +
+  geom_bar(stat = "identity", col = col2, fill = col1, size = 1,
+           width = 0.4,
+           aes( size = as.factor(year),
+                alpha = as.factor(year),  
+                fill =as.factor(year))) +
+  theme_minimal() +
+  labs(x = "Date of funding round",
+       y = "GBP per CYP")+
+  theme(text = element_text(size=8))+ 
+scale_fill_manual(values=c(col2, col2, col2, col2, col2),guide=F) +
+  scale_alpha_manual(values=c(1,1,1,1,.4),guide=F) +
+  scale_size_manual(values=c(1,1,1,1,.1),guide=F) 
+``` 
+  
+Using CYP we can also investigate how the shares of different type of contraceptives have changed over time in terms of how many CYPs they are responsible for from all the contraception provided by the clinics: 
 
 ```{r, echo = FALSE, fig.cap= "\\label{fig:11}Contribution to total CYP provided by each contraceptive type (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE}
 
@@ -351,24 +372,55 @@ df_rounds %>%
          der_fp_lt_iucd_cyp,
          der_fp_implants_tot_cyp,
          der_fp_depo_tot_cyp,
-        der_fp_pills_tot_cyp) %>% 
+         der_fp_pills_tot_cyp) %>% 
   gather(key = contr_type, value = cyp, 2:5) %>% 
   group_by(fund_date) %>% 
   mutate(prop.cyp = cyp/sum(cyp)) %>% 
   arrange(fund_date) %>% 
-  ggplot(aes(x = fund_date, y = prop.cyp)) +
-  geom_line(aes(color = contr_type)) + 
-  geom_point(aes(color = contr_type)) + 
-scale_color_manual(values = c("red", "blue", "goldenrod2", "forestgreen"),
-                   labels = c("Depo injections", "Implants", "IUCDs", "Pills"),
-                           name = "Contraceptive type") +
+  ggplot(aes(x = fund_date, y = prop.cyp, fill = contr_type)) +
+  geom_area(color = "gray") + 
+  scale_fill_manual(values = c(col2, col1, "goldenrod2", "forestgreen"),
+                     labels = c("Depo injections", "Implants", "IUCDs", "Pills"),
+                     name = "Contraceptive type") +
   theme_minimal() +
   labs( x = "Date of funding round",
-       y = "Proportion of total CYP provided")+
+        y = "Proportion of total CYP provided")+
   theme(text = element_text(size=8))
   
-  
 ```
+
+And as before, annual summaries of data are a less noisy way of observing the overall trends
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:17}Contribution to total CYP provided by each contraceptive type - annualy (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE}
+df_years %>% 
+  select(year,
+         der_fp_lt_iucd_cyp,
+         der_fp_implants_tot_cyp,
+         der_fp_depo_tot_cyp,
+         der_fp_pills_tot_cyp) %>% 
+  gather(key = contr_type, value = cyp, 2:5) %>% 
+  group_by(year) %>% 
+  mutate(prop.cyp = cyp/sum(cyp)) %>% 
+  arrange(year) %>% 
+  ggplot(aes(x = year, y = prop.cyp, fill = contr_type)) +
+  geom_bar(stat = "identity", width = 0.4,
+           aes( size = as.factor(year),
+                alpha = as.factor(year) )) + 
+  scale_fill_manual(values = c(col2, col1, "goldenrod2", "forestgreen"),
+                    labels = c("Depo injections", "Implants", "IUCDs", "Pills"),
+                    name = "Contraceptive type") +
+  theme_minimal() +
+  labs( x = "Date of funding round",
+        y = "Proportion of total CYP provided")+
+  theme(text = element_text(size=8)) +
+  scale_alpha_manual(values=c(1,1,1,1,.4),guide=F) +
+  scale_size_manual(values=c(1,1,1,1,.1),guide=F) 
+
+```
+
+
+
+
 \newpage
 # Appendix {-}
 

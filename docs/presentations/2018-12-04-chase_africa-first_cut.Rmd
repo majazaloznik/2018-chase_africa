@@ -117,3 +117,13 @@ knitr::include_graphics("figures/fp_all_year.gif")
 ```
 .small[Total delivery of six main contraceptive types by funding year (Dandelion 2014-2018)]
 
+---
+### Rates 
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/fp_lt_st_rate_clinics.gif")
+```
+
+.small[Proportion of long-term and short-term contraceptives at each clinic (Dandelion 2014-2018)]
+
+

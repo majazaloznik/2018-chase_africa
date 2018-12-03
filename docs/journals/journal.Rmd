@@ -204,6 +204,19 @@ and only one in the second? Great, that works!
 
 7. Now need to do some rates stuff before the cost ones. 
 
+8. Change colours to chase colours. 
+
+9. Check spelling in document. 
+
+10. See if you can't get the CYP chart into an area one instead. 
+
+## Other ideas?
+
+As has been noted, this preliminary analysis was only conducted on the Dandelion data. Using the data for all the sites will allow for comparison between them as well as mapping of the data if appropriate geographical data can be provided.
+
+The CYPs seem most promising to base an analysis of impact on, but also have issues that need to be addressed e.g. the fact that all the CYPs are credited to the year the protection was delivered and not annualised over it's lifetime.
+
+
 
 
 

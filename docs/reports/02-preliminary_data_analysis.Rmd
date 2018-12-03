@@ -25,7 +25,8 @@ df <- readRDS(here::here("data/processed/dandelion.rds"))
 df_rounds <- readRDS(here::here( "data/processed/dandelion_rounds.rds"))
 df_years <- readRDS(here::here("data/processed/dandelion_years.rds"))
 
-
+col1 <- "#85A279"
+col2 <-   "#DD6948"
 ```
 
 # Introduction
@@ -65,12 +66,11 @@ Finally summary statistics are calculated by year and by *funding period* to all
 
 ## Simple time series
 
-Each of the raw variables on service delivery under the family planning and integrated health services headings can be plotted as a simple time series. Figure \ref{fig:01} shows the simple time series of 5-year implant delivery, both as first time and repeated. 
+Each of the raw variables on service delivery under the family planning and integrated health services headings can be plotted as a simple time series. Figure \ref{fig:01} shows the simple time series of 5-year implant delivery, both first time and repeated fittings. 
 
 
 ```{r, echo = FALSE, fig.cap= "\\label{fig:01}Simple time series of 5-year implant delivery (Dandelion: 2014 - 2018)", out.extra = ''}
 ggplot(df, aes(date, fp_lt_5yr_1st+fp_lt_5yr_rep)) +
-  geom_point() +
   geom_line() +
   # geom_smooth(method = lm, formula = y ~ splines::bs(x, 9),
   #            color = "red") +
@@ -86,7 +86,6 @@ Figure 2 plots another one of the family planning services provided, this time D
 
 ```{r, echo = FALSE, fig.cap= "\\label{fig:02}Simple time series of Depo injection delivery (Dandelion: 2014 - 2018)", out.extra = ''}
 ggplot(df, aes(date, fp_st_depo_1st+fp_st_depo_rep)) +
-  geom_point() +
   geom_line() +
   theme_minimal() +
   labs(x = "Date",
@@ -97,7 +96,6 @@ ggplot(df, aes(date, fp_st_depo_1st+fp_st_depo_rep)) +
 
 ```{r, echo = FALSE, fig.cap= "\\label{fig:03}Simple time series of deworming", out.extra = ''}
 ggplot(df, aes(date, ihs_deworming)) +
-  geom_point() +
   geom_line() +
   # geom_smooth(method = lm, formula = y ~ splines::bs(x, 9),
   #            color = "red") +
@@ -114,9 +112,8 @@ Due to the rather high levels of noisiness in the data it makes sense to try and
 
 ```{r, echo = FALSE, fig.cap= "\\label{fig:04}Simple time series of 3-year implant delivery with LOESS curve (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE}
 ggplot(df, aes(date, fp_lt_3yr_1st+fp_lt_3yr_rep)) +
-  geom_point() +
   geom_line() +
-  geom_smooth(span = 0.3, color = "red") +
+  geom_smooth(span = 0.3, color = col2) +
   theme_minimal() +
   labs(x = "Date",
        y = "Number of persons treated") +
@@ -126,9 +123,9 @@ ggplot(df, aes(date, fp_lt_3yr_1st+fp_lt_3yr_rep)) +
 
 ```{r, echo = FALSE, fig.cap= "\\label{fig:05}Simple time series of condom delivery with LOESS curve (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE}
 ggplot(df, aes(date, fp_condoms)) +
-  geom_point() +
+  #geom_point() +
   geom_line() +
-  geom_smooth(span = 0.3, color = "red") +
+  geom_smooth(span = 0.3, color = col2) +
   theme_minimal() +
   labs(x = "Date",
        y = "Number of persons treated") +
@@ -136,15 +133,15 @@ ggplot(df, aes(date, fp_condoms)) +
 
 ```
 
-Smoothing should be interpreted carefully though, as it uses a *sliding window* to calculate the best fit, and we can use the size or span of this window to affect how smooth or wiggly we want the curve to be. Figure 6 uses delivery of HIV testing to demonstrate this by plotting a curve with a large span (in blue) and one with a narrower span (red): 
+Smoothing should be interpreted carefully though, as it uses a *sliding window* to calculate the best fit, and we can use the size or span of this window to affect how smooth or wiggly we want the curve to be. Figure 6 uses delivery of HIV testing to demonstrate this by plotting a curve with a large span (in orange) and one with a narrower span (green): 
 
 
 ```{r, echo = FALSE, fig.cap= "\\label{fig:06}Simple time series of HIV test delivery with LOESs curve (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE}
 ggplot(df, aes(date, ihs_hiv_test)) +
-  geom_point() +
+  #geom_point() +
   geom_line() +
-  geom_smooth(span = 0.2, color = "red", se = FALSE) +
-  geom_smooth(span = 0.5, color = "blue", se = FALSE) +
+  geom_smooth(span = 0.2, color = col1, se = FALSE) +
+  geom_smooth(span = 0.5, color = col2, se = FALSE) +
   theme_minimal() +
   labs(x = "Date",
        y = "Number of persons treated")+
@@ -159,10 +156,10 @@ Due to the nature of the data collection it might be more reasonable to group th
 
 ggplot(df_rounds, aes(fund_date)) +
   geom_line(aes(y = der_fp_lt_total, colour = "Long term")) + 
-  geom_point(aes(y = der_fp_lt_total, colour = "Long term")) + 
+ #geom_point(aes(y = der_fp_lt_total, colour = "Long term")) + 
   geom_line(aes(y = der_fp_st_total, colour = "Short term")) +
-  geom_point(aes(y = der_fp_st_total, colour = "Short term")) +
-  scale_color_manual(values = c("red", "blue"), name = "Contraceptive type") +
+  #geom_point(aes(y = der_fp_st_total, colour = "Short term")) +
+  scale_color_manual(values = c(col1, col2), name = "Contraceptive type") +
   theme_minimal() +
   labs(x = "Date of funding round",
        y = "Number of persons treated")+
@@ -170,11 +167,11 @@ ggplot(df_rounds, aes(fund_date)) +
 ```
 
 
-However the problem with this chart, as with the previous simple time series ones, is that clinics and funding periods are not regularly spaced, so the charts don't give a reliable overview of the overall trends. Using the funding rounds makes sense for when we look at costs though, so we will return to them further down. 
+However the problem with this chart, as with the previous simple time series ones, is that clinics and funding periods are not regularly spaced, so the charts don't give a reliable overview of the overall trends. Using the funding rounds makes sense for when we look at rates anda at costs though, so we will return to them in the next section. 
 
 But looking at overall trends perhaps the best option is to look at annual changes. Figure \ref{fig:08} summarises the same data as Figure \ref{fig:07} on recipients of long and short term contraceptives, this time looking at the data annually. A quick overview of the individual family planning methods is shown in  Figure \ref{fig:09}. [^2]
 
-```{r, echo = FALSE, fig.cap= "\\label{fig:08}Annualy aggregated time series of recipients of long term and short term contraceptives  (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE, fig.height = 3.1}
+```{r, echo = FALSE, fig.cap= "\\label{fig:08}Annualy aggregated time series of recipients of long term and short term contraceptives  (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE, fig.height = 3.}
 
 df_years %>% 
   select(year, der_fp_lt_total, der_fp_st_total) %>% 
@@ -182,7 +179,7 @@ df_years %>%
   ggplot(aes( x = year, y = freq, col = var)) +
   geom_bar(width = 0.4, stat = "identity", position = position_dodge(0.5),fill = "white",
            aes(color = as.factor(var), size = as.factor(year))) +
-  scale_color_manual(values = c("red", "blue"), labels = c("Long term", "Short term"), 
+  scale_color_manual(values = c(col1, col2), labels = c("Long term", "Short term"), 
                      name = "Contraceptive type") +
   scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
   theme_minimal() +
@@ -191,7 +188,7 @@ df_years %>%
   theme(text = element_text(size=8))
 ```
 
-```{r, echo = FALSE, fig.cap= "\\label{fig:09}Annualy aggregated time series of recipients of all family planning services  (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE}
+```{r, echo = FALSE, fig.cap= "\\label{fig:09}Annualy aggregated time series of recipients of all family planning services  (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE,  fig.height = 3.}
 df_years %>% 
   select(year, starts_with("fp")) %>% 
   mutate(fp_lt_5yr = fp_lt_5yr_1st + fp_lt_5yr_rep,
@@ -205,7 +202,7 @@ df_years %>%
   mutate(var = factor(var, labels = c("3 year implant", "5 year implant", "IUCD",
                                         "Depo injection", "Pills 1 month", "Pills 3 months"))) %>% 
   ggplot(aes(x = year, y = freq)) +
-  geom_bar(width = 0.4, stat = "identity", position = position_dodge(0.5), color = "red", fill = "white",
+  geom_bar(width = 0.4, stat = "identity", position = position_dodge(0.5), color = col1, fill = col2,
            aes( size = as.factor(year))) +
   facet_wrap("var") +
   scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
@@ -216,6 +213,117 @@ df_years %>%
 ``` 
 
 [^2]:  Because the 2018 data is still incomplete, last two bars are drawn thinner to make that clear.  
+
+## Rates
+
+If instead of looking at totals we look at rates i.e. relative numbers instead of absolute ones, we can observe trends over time at the more granular levels of individual clinics wihtout worying about their spacing. For example we can calculate the ratio of recipients of long term vs short term contraceptives, as we do in Figure \ref{fig:12}. There is naturally still a lot of noise, so we have added a LOESS curve to smooth the variation out a little bit. 
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:12} Ratio of recipients of long term and short term contraceptives in each clinic  (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE, fig.height = 2.9}
+df %>% 
+  rowwise() %>% 
+  mutate(prop_lt_total = der_fp_lt_total/(der_fp_lt_total+ der_fp_st_total),
+         prop_st_total = der_fp_st_total/(der_fp_lt_total+ der_fp_st_total)) %>% 
+  select(date, prop_lt_total, prop_st_total) %>% 
+  gather(key = var, value = freq, 2:3) -> df_sub
+  
+ggplot(data = df_sub, aes( x = date, y = freq, col = var)) +
+  geom_bar(stat = "identity", aes(color = as.factor(var),  fill = as.factor(var))) +    
+  geom_point(data = subset(df_sub, var == "prop_st_total"), col = "black", size = 1) +
+  geom_smooth(data = subset(df_sub, var == "prop_st_total"), 
+                aes(x = date, y =  freq), col = "black", size = 1, span = 0.4, se = FALSE)   +
+  scale_color_manual(values = c(col1, col2), labels = c("Long term", "Short term"), 
+                     name = "Contraceptive type") +
+    scale_fill_manual(values = c(col1, col2), labels = c("Long term", "Short term"), 
+                     name = "Contraceptive type") +
+  scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
+  theme_minimal() +
+  labs(x = "Date of clinic",
+       y = "Number of persons treated")+
+  theme(text = element_text(size=8))
+```
+
+We can also aggregate these rates, for example see how the ratios vary from one funding round to another, which is less noisy as can be seen in Figure \ref{fig:13}. 
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:13} Time series of ratio of recipients of long term and short term contraceptives if each funding round (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE, fig.height = 3.}
+df_rounds %>% 
+  rowwise() %>% 
+  mutate(prop_lt_total = der_fp_lt_total/(der_fp_lt_total+ der_fp_st_total),
+         prop_st_total = der_fp_st_total/(der_fp_lt_total+ der_fp_st_total)) %>% 
+  select(fund_date, prop_lt_total, prop_st_total) %>% 
+  gather(key = var, value = freq, 2:3) -> df_sub
+
+ggplot(data = df_sub, aes( x = fund_date, y = freq, col = var)) +
+  geom_bar(stat = "identity", 
+           aes(color = as.factor(var), fill = as.factor(var))) +
+  # geom_smooth(data = subset(df_sub, var == "prop_st_total"), 
+ #            aes(x = fund_date, y =  freq), col = "black", size = 1, span = 0.4, se = FALSE)   +
+  geom_point(data = subset(df_sub, var == "prop_st_total"), col = "black", size = 1) +
+  scale_color_manual(values = c(col1, col2), labels = c("Long term", "Short term"), 
+                     name = "Contraceptive type") +
+  scale_fill_manual(values = c(col1, col2), labels = c("Long term", "Short term"), 
+                     name = "Contraceptive type") +
+  scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
+  theme_minimal() +
+  labs(x = "Date of funding round",
+       y = "Number of persons treated")+
+  theme(text = element_text(size=8))
+```
+
+Other rates that could be of interest are e.g. rates of HIV positive tests as in figures \ref{fig:14} and \ref{fig:15}
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:14} Proportion of positive HIV test results in each clinic (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE, fig.height = 3.1}
+
+df %>% 
+  rowwise() %>% 
+  mutate(ihs_hiv_poz = ifelse(is.na(ihs_hiv_poz), 0, ihs_hiv_poz)) %>% 
+  mutate(prop_hiv_neg = (ihs_hiv_test-ihs_hiv_poz)/(ihs_hiv_test),
+         prop_hiv_poz = (ihs_hiv_poz)/(ihs_hiv_test)) %>% 
+  select(date, prop_hiv_neg, prop_hiv_poz) %>% 
+  gather(key = var, value = freq, 2:3) -> df_sub
+
+ggplot(data = df_sub, aes( x = date, y = freq, col = var)) +
+  geom_bar(stat = "identity", aes(color = as.factor(var),  fill = as.factor(var))) +    
+  geom_point(data = subset(df_sub, var == "prop_hiv_poz"), col = "black", size = 1) +
+  geom_smooth(data = subset(df_sub, var == "prop_hiv_poz"), 
+              aes(x = date, y =  freq), col = "black", size = 1, span = 0.4, se = FALSE)   +
+  scale_color_manual(values = c(col1, col2), labels = c("Negative", "Positive"), 
+                     name = "HIV test result") +
+  scale_fill_manual(values = c(col1, col2), labels = c("Negative", "Positive"), 
+                    name = "HIV test result") +
+  scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
+  theme_minimal() +
+  labs(x = "Date of clinic",
+       y = "Number of persons treated")+
+  theme(text = element_text(size=8))
+```
+
+```{r, echo = FALSE, fig.cap= "\\label{fig:15} Proportion of positive HIV test results in each funding round (Dandelion: 2014 - 2018)", out.extra = '', message = FALSE, warning = FALSE, fig.height = 3.1}
+df_rounds %>% 
+  rowwise() %>% 
+  mutate(ihs_hiv_poz = ifelse(is.na(ihs_hiv_poz), 0, ihs_hiv_poz)) %>% 
+  mutate(prop_hiv_neg = (ihs_hiv_test-ihs_hiv_poz)/(ihs_hiv_test),
+         prop_hiv_poz = (ihs_hiv_poz)/(ihs_hiv_test)) %>% 
+  select(fund_date, prop_hiv_neg, prop_hiv_poz) %>% 
+  gather(key = var, value = freq, 2:3) -> df_sub
+
+ggplot(data = df_sub, aes( x = fund_date, y = freq, col = var)) +
+  geom_bar(stat = "identity", 
+           aes(color = as.factor(var), fill = as.factor(var))) +
+  # geom_smooth(data = subset(df_sub, var == "prop_st_total"), 
+  #            aes(x = fund_date, y =  freq), col = "black", size = 1, span = 0.4, se = FALSE)   +
+  geom_point(data = subset(df_sub, var == "prop_hiv_poz"), col = "black", size = 1) +
+  scale_color_manual(values = c(col1, col2), labels = c("Negative", "Positive"), 
+                     name = "HIV test result") +
+  scale_fill_manual(values = c(col1, col2), labels = c("Negative", "Positive"), 
+                    name = "HIV test result") +
+  scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
+  theme_minimal() +
+  labs(x = "Date of funding round",
+       y = "Number of persons treated")+
+  theme(text = element_text(size=8))
+```
+
+\newpage
 
 ## Couple Years of Protection Analysis
 

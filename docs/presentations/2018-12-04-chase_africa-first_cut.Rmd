@@ -46,7 +46,7 @@ knitr::include_graphics("figures/page-header-3.jpg")
 
 ---
 
-### Analysis - Simple Time Series
+### Simple Time Series
 
 ```{r echo = FALSE}
 knitr::include_graphics("figures/fp_lt_3yr_line.gif")
@@ -55,7 +55,7 @@ knitr::include_graphics("figures/fp_lt_3yr_line.gif")
 .small[3-year implant delivery (Dandelion 2014-2018)]
 ---
 
-### Analysis - Simple Time Series
+### Simple Time Series
 
 ```{r echo = FALSE}
 knitr::include_graphics("figures/fp_lt_3yr_add_5yr_line.gif")
@@ -64,10 +64,56 @@ knitr::include_graphics("figures/fp_lt_3yr_add_5yr_line.gif")
 .small[3-year and 5-year implant delivery (Dandelion 2014-2018)]
 
 ---
-### Analysis - Simple Time Series
+### Simple Time Series & smooth curves
 
 ```{r echo = FALSE}
 knitr::include_graphics("figures/fp_lt_3yr_add_smooth.gif")
 ```
 
 .small[3-year and implant delivery with LOESS curve (Dandelion 2014-2018)]
+
+---
+### Simple Time Series & smooth curves
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/ihs_immunization_add_smooth.gif")
+```
+
+.small[Immunization delivery with LOESS curve (Dandelion 2014-2018)]
+
+---
+### Simple Time Series & smooth curves
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/fp_st_depo_add_smooth_two.gif")
+```
+
+.small[Depo injection delivery with two different LOESS curves (Dandelion 2014-2018)]
+
+---
+### Aggregated Time Series: Funding rounds
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/fp_lt_st_funding_round.gif")
+```
+
+.small[Long and short term contraceptive delivery by funding round (Dandelion 2014-2018)]
+
+---
+### Aggregated Time Series: Annual totals
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/fp_lt_st_funding_year.png")
+
+```
+.small[Long and short term contraceptive delivery by funding year (Dandelion 2014-2018)]
+
+---
+### Aggregated Time Series: Annual totals
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/fp_all_year.gif")
+
+```
+.small[Total delivery of six main contraceptive types by funding year (Dandelion 2014-2018)]
+

@@ -182,6 +182,28 @@ and only one in the second? Great, that works!
 
 8. Can I transition between different `geom_smooth()`s? Probably not, unless I explicilty have it as a columns, that would probably be better?
 
+# Saturday 1.12.2018
+
+1. not sure the makefile is working it seems to be going into repeating the plotting ones... let's try if this isn't because all the gifs are listed as targets, I'll try replacing that with just one. 
+
+2. OK, let's see if I can't do a bunch of loess regressions and cycle through them with state? But how will that work for SE? Hmm, is this necessary? But let's give it a try, what the heck. Maybe later actually... ANyway, i left my main work in the un-saved file on my other computer. That's a lesson learned right there!
+
+# Monday 3.12.2018
+
+1. Loked into revealing the loess curves and there is a promising idea [here](https://stackoverflow.com/questions/53196320/transition-reveal-does-not-work-with-both-geom-point-and-geom-smooth) but splits the line into segments and is kludgey... SO dropping that now.. 
+
+2. I should probably add the sums as separate variables.. Or maybe no bother now. Not now.
+
+3. Do double loess curve
+
+4. Aggregate by funding round/period example. 
+
+5. Damn, really odd thing happening with a transition reveal, where the poitns are just jumping off and ahead of the lines!? i'll save as weird.gif, but have to move on now probably?
+
+6. OK, al single and aggregate time series are done - oh, should have some bonus ones as well probably? I'll do those later.
+
+7. Now need to do some rates stuff before the cost ones. 
+
 
 
 

@@ -20,7 +20,7 @@ PREZ:= $(DOC)/presentations
 P-FIG:= $(PREZ)/figures
 # FILES #######################################################################
 
-figz:= $(P-FIG)/*.*
+figz:= $(P-FIG)/fp_lt_3yr_line.gif
 
 # all excel raw files
 xlsx:= $(DT/R)/*.xlsx

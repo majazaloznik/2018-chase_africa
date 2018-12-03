@@ -210,11 +210,15 @@ and only one in the second? Great, that works!
 
 10. See if you can't get the CYP chart into an area one instead. 
 
+11. FUCK. why is there no 2018 data in the df_rounds table!? It's all good, the 2018 funding round was dated december 2017. So good to know: which date should we use?
+
 ## Other ideas?
 
 As has been noted, this preliminary analysis was only conducted on the Dandelion data. Using the data for all the sites will allow for comparison between them as well as mapping of the data if appropriate geographical data can be provided.
 
 The CYPs seem most promising to base an analysis of impact on, but also have issues that need to be addressed e.g. the fact that all the CYPs are credited to the year the protection was delivered and not annualised over it's lifetime.
+
+There weren't really enough data points here, but CYP cost could for example be modelled as a function of the structure of the contraceptive 'basket' e.g. ratio of long term to short term vs cost?
 
 
 

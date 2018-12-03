@@ -156,7 +156,7 @@ ggplot( aes(fund_date, y = val, colour = var)) +
         axis.title=element_text(size=20),
         legend.text = element_text(size=18),
         legend.title = element_text(size=20),
-        legend.justification=c(0,1),legend.position=c(0,1))+
+        legend.justification=c(1,1),legend.position=c(1,1))+
   ylim(0,1500) +
   transition_reveal(var, fund_date) -> p
 animate(p,  renderer = gifski_renderer(loop = FALSE), width = 1000, height = 600)
@@ -174,9 +174,17 @@ df_years %>%
                      name = "Contraceptive type") +
   scale_size_manual(values=c(1.2,1.2,1.2,1.2,.4),guide=F) +
   theme_minimal() +
+  theme(axis.text=element_text(size=18),
+        axis.title=element_text(size=20),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=20),
+        legend.justification=c(1,1),legend.position=c(1,1)) +
   labs(x = "Year",
-       y = "Number of persons treated")
-ggsave(width = 10, height = 6,   paste0("docs/presentations/figures/", "fp_lt_st_funding_year.png"))
+       y = "Number of persons treated") +
+  transition_layers(transition_length = 1, layer_length = 1) -> p
+animate(p, nframes = 1, renderer = gifski_renderer(loop = FALSE), width = 1000, height = 600)
+anim_save(paste0("docs/presentations/figures/", "fp_lt_st_funding_year.gif"))
+
 
 
 ## aggregate all family planning - yearly
@@ -244,3 +252,196 @@ ggplot(data = df_sub, aes( x = date, y = freq, col = var)) +
 
 animate(p,  renderer = gifski_renderer(loop = FALSE), width = 1000, height = 600)
 anim_save(paste0("docs/presentations/figures/", "fp_lt_st_rate_clinics.gif"))
+
+
+# rates long to short annual
+
+df_rounds %>%
+  rowwise() %>%
+  mutate(prop_lt_total = der_fp_lt_total/(der_fp_lt_total+ der_fp_st_total),
+         prop_st_total = der_fp_st_total/(der_fp_lt_total+ der_fp_st_total)) %>%
+  select(fund_date, prop_lt_total, prop_st_total) %>%
+  gather(key = var, value = freq, 2:3) -> df_sub
+
+ggplot(data = df_sub, aes( x = fund_date, y = freq, col = var)) +
+  geom_bar(stat = "identity",
+           aes(color = as.factor(var), fill = as.factor(var))) +
+  geom_point(data = subset(df_sub, var == "prop_st_total"), col = "black", size = 2) +
+   geom_smooth(data = subset(df_sub, var == "prop_st_total"),
+              aes(x = fund_date, y =  freq), col = "black", size = 1, span = 0.4, se = FALSE)   +
+  scale_color_manual(values = c(col1, col2), labels = c("Long term", "Short term"),
+                     name = "Contraceptive type") +
+  scale_fill_manual(values = c(col1, col2), labels = c("Long term", "Short term"),
+                    name = "Contraceptive type") +
+  scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
+  theme_minimal() +
+  labs(x = "Date of funding round",
+       y = "Number of persons treated") +
+  theme(axis.text=element_text(size=18),
+        axis.title=element_text(size=20),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=20),
+        legend.justification=c(1,1),legend.position=c(1,1)) +
+  transition_layers(transition_length = 1, layer_length = 2, from_blank = FALSE) -> p
+
+animate(p,  renderer = gifski_renderer(loop = FALSE), width = 1000, height = 600)
+anim_save(paste0("docs/presentations/figures/", "fp_lt_st_rate_rounds.gif"))
+
+
+
+df_years %>%
+  rowwise() %>%
+  mutate(prop_lt_total = der_fp_lt_total/(der_fp_lt_total+ der_fp_st_total),
+         prop_st_total = der_fp_st_total/(der_fp_lt_total+ der_fp_st_total)) %>%
+  select(year, prop_lt_total, prop_st_total) %>%
+  gather(key = var, value = freq, 2:3) -> df_sub
+
+ggplot(data = df_sub, aes( x = year, y = freq, col = var)) +
+  geom_bar(stat = "identity",width = 0.4,
+           aes(color = as.factor(var), fill = as.factor(var), alpha= as.factor(year))) +
+  scale_color_manual(values = c(col1, col2), labels = c("Long term", "Short term"),
+                     name = "Contraceptive type") +
+  scale_fill_manual(values = c(col1, col2), labels = c("Long term", "Short term"),
+                    name = "Contraceptive type") +
+  scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
+  theme_minimal() +
+  scale_alpha_manual(values=c(1,1,1,1,.4),guide=F) +
+  labs(x = "Year",
+       y = "Number of persons treated") +
+  theme(axis.text=element_text(size=18),
+        axis.title=element_text(size=20),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=20),
+        legend.justification=c(1,1),legend.position=c(1,1)) +
+  transition_layers(transition_length = 1, layer_length = 2, from_blank = FALSE) -> p
+
+animate(p, nframes = 1, renderer = gifski_renderer(loop = FALSE), width = 1000, height = 600)
+anim_save(paste0("docs/presentations/figures/", "fp_lt_st_rate_years.gif"))
+
+
+## cyp trend funding round
+
+df_rounds %>%
+  arrange(fund_date) %>%
+  ggplot(aes(fund_date, der_gpb_per_cyp)) +
+  geom_point() +
+  geom_line() +
+  theme_minimal() +
+  labs(x = "Date of funding round",
+       y = "GBP per CYP")+
+  theme(text = element_text(size=8))+
+  theme(axis.text=element_text(size=18),
+        axis.title=element_text(size=20),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=20),
+        legend.justification=c(1,1),legend.position=c(1,1)) +
+  transition_reveal(1, fund_date) ->p
+
+animate(p, renderer = gifski_renderer(loop = FALSE), width = 1000, height = 600)
+anim_save(paste0("docs/presentations/figures/", "cyp_fund_rounds.gif"))
+
+
+df_years %>%
+  arrange(year) %>%
+  ggplot(aes(year, der_gpb_per_cyp)) +
+  geom_bar(stat = "identity", col = col2, fill = col1, size = 1,
+           width = 0.4,
+           aes( size = as.factor(year),
+                alpha = as.factor(year),
+                fill =as.factor(year))) +
+  theme_minimal() +
+  scale_alpha_manual(values=c(1,1,1,1,.4),guide=F) +
+  scale_size_manual(values=c(1,1,1,1,.4),guide=F) +
+  labs(x = "Year",
+       y = "GBP per CYP") +
+  theme(axis.text=element_text(size=18),
+        axis.title=element_text(size=20),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=20),
+        legend.justification=c(1,1),legend.position=c(1,1)) +
+  transition_layers(transition_length = 1, layer_length = 2, from_blank = FALSE) -> p
+
+animate(p, nframes = 1, renderer = gifski_renderer(loop = FALSE), width = 1000, height = 600)
+anim_save(paste0("docs/presentations/figures/", "cyp_fund_years.gif"))
+
+
+df_rounds %>%
+  rowwise() %>%
+  ggplot(aes(x= der_fp_total, y = der_gpb_per_cyp)) +
+  geom_point() +
+  theme_minimal() +
+  geom_smooth(col = col2) +
+  labs(x = "Total number of FP recipients",
+       y = "GBP per CYP") +
+  theme(axis.text=element_text(size=18),
+        axis.title=element_text(size=20),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=20),
+        legend.justification=c(1,1),legend.position=c(1,1)) +
+  transition_layers(transition_length = 1, layer_length = 2, from_blank = FALSE) -> p
+
+animate(p, renderer = gifski_renderer(loop = FALSE), width = 1000, height = 600)
+anim_save(paste0("docs/presentations/figures/", "cyp_by_fp_total.gif"))
+
+# structure by CYP each round
+df_rounds %>%
+  select(fund_date,
+         der_fp_lt_iucd_cyp,
+         der_fp_implants_tot_cyp,
+         der_fp_depo_tot_cyp,
+         der_fp_pills_tot_cyp) %>%
+  gather(key = contr_type, value = cyp, 2:5) %>%
+  group_by(fund_date) %>%
+  mutate(prop.cyp = cyp/sum(cyp)) %>%
+  arrange(fund_date) %>%
+  ggplot(aes(x = fund_date, y = prop.cyp, fill = contr_type)) +
+  geom_area(color = "gray") +
+  scale_fill_manual(values = c(col2, col1, "goldenrod2", "forestgreen"),
+                    labels = c("Depo injections", "Implants", "IUCDs", "Pills"),
+                    name = "Contraceptive type") +
+  theme_minimal() +
+  labs( x = "Date of funding round",
+        y = "Proportion of total CYP provided")+
+  theme(axis.text=element_text(size=18),
+        axis.title=element_text(size=20),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=20),
+        legend.justification=c(1,1),legend.position=c(.93,.9)) +
+  transition_layers(transition_length = 1, layer_length = 2, from_blank = FALSE) -> p
+
+animate(p, nframes = 1, renderer = gifski_renderer(loop = FALSE), width = 1000, height = 600)
+anim_save(paste0("docs/presentations/figures/", "cyp_str_rounds.gif"))
+
+# structure by CYP each year
+
+df_years %>%
+  select(year,
+         der_fp_lt_iucd_cyp,
+         der_fp_implants_tot_cyp,
+         der_fp_depo_tot_cyp,
+         der_fp_pills_tot_cyp) %>%
+  gather(key = contr_type, value = cyp, 2:5) %>%
+  group_by(year) %>%
+  mutate(prop.cyp = cyp/sum(cyp)) %>%
+  arrange(year) %>%
+  ggplot(aes(x = year, y = prop.cyp, fill = contr_type)) +
+  geom_bar(stat = "identity", width = 0.4,
+           aes( size = as.factor(year),
+                alpha = as.factor(year) )) +
+  scale_fill_manual(values = c(col2, col1, "goldenrod2", "forestgreen"),
+                    labels = c("Depo injections", "Implants", "IUCDs", "Pills"),
+                    name = "Contraceptive type") +
+  theme_minimal() +
+  theme(axis.text=element_text(size=18),
+        axis.title=element_text(size=20),
+        legend.text = element_text(size=18),
+        legend.title = element_text(size=20)) +
+  labs( x = "Date of funding round",
+        y = "Proportion of total CYP provided")+
+  theme(text = element_text(size=8)) +
+  scale_alpha_manual(values=c(1,1,1,1,.4),guide=F) +
+  scale_size_manual(values=c(1,1,1,1,.1),guide=F) +
+transition_layers(transition_length = 1, layer_length = 2, from_blank = FALSE) -> p
+
+animate(p, nframes = 1, renderer = gifski_renderer(loop = FALSE), width = 1000, height = 600)
+anim_save(paste0("docs/presentations/figures/", "cyp_str_years.gif"))

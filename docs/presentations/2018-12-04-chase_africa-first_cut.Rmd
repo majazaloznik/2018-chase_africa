@@ -37,11 +37,7 @@ knitr::include_graphics("figures/page-header-3.jpg")
 
 --
 
-* Data Management
-
---
-
-* Analysis Pipeline
+* Data Management & Analysis Pipeline
 
 
 ---
@@ -103,7 +99,7 @@ knitr::include_graphics("figures/fp_lt_st_funding_round.gif")
 ### Aggregated Time Series: Annual totals
 
 ```{r echo = FALSE}
-knitr::include_graphics("figures/fp_lt_st_funding_year.png")
+knitr::include_graphics("figures/fp_lt_st_funding_year.gif")
 
 ```
 .small[Long and short term contraceptive delivery by funding year (Dandelion 2014-2018)]
@@ -126,4 +122,77 @@ knitr::include_graphics("figures/fp_lt_st_rate_clinics.gif")
 
 .small[Proportion of long-term and short-term contraceptives at each clinic (Dandelion 2014-2018)]
 
+---
+### Rates 
 
+```{r echo = FALSE}
+knitr::include_graphics("figures/fp_lt_st_rate_rounds.gif")
+```
+
+.small[Proportion of long-term and short-term contraceptives in each funding round(Dandelion 2014-2018)]
+
+---
+### Rates 
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/fp_lt_st_rate_years.gif")
+```
+
+.small[Proportion of long-term and short-term contraceptives for each year (Dandelion 2014-2018)]
+---
+### CYP Analysis - Cost
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/cyp_fund_rounds.gif")
+```
+
+.small[Cost (in GBP) of one Couple Year of Protection (CYP) in each funding round (Dandelion 2014-2018)]
+
+---
+### CYP Analysis - Cost
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/cyp_fund_years.gif")
+```
+
+.small[Cost (in GBP) of one Couple Year of Protection (CYP) for each year (Dandelion 2014-2018)]
+
+---
+### CYP Analysis - Cost
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/cyp_by_fp_total.gif")
+```
+
+.small[CYP cost by number of people receiving family planning in each funding round (Dandelion 2014-2018)]
+
+---
+### CYP Analysis - Structure
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/cyp_str_rounds.gif")
+```
+
+.small[Structure of CYP provided by different contraceptive types in each funding round (Dandelion 2014-2018)]
+---
+### CYP Analysis - Structure
+
+```{r echo = FALSE}
+knitr::include_graphics("figures/cyp_str_years.gif")
+```
+
+.small[Structure of CYP provided by different contraceptive types for every year (Dandelion 2014-2018)]
+
+
+---
+### Data Management & Analysis Pipeline
+
+--
+
+* Data *janitor work* -> Tidy data
+
+* Data input and error checking
+
+* Transparency and Reproducibility
+
+* Interactivity?

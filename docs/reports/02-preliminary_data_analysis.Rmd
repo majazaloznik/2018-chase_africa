@@ -35,6 +35,8 @@ This material has been prepared for the introductory meeting between Chase Afric
 
 It is based on a preliminary analysis of part of the data supplied by Chase Africa and aims to outline and demonstrate some of the possibilities that the data afford. 
 
+The material is accompanied by an [online presentation](https://majazaloznik.github.io/2018-chase_africa/) that includes most of the same graphic material as this handout does: [https://majazaloznik.github.io/2018-chase_africa/](https://majazaloznik.github.io/2018-chase_africa/). 
+
 *** 
 # Data 
 

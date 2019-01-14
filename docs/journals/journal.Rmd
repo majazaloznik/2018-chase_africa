@@ -295,7 +295,12 @@ Other things:
 Prepare the tempalte data file with dictionaries for both the clinic table and for the funding table. In fact, this should probably be on google sheets anyway. Template file with two data files and two dictionaries ready to be populated by CP is in the data/dictionaries folder.  
 
 
+# Monday 14.1.2019 
 
+CP worried about importing data form Excel to google sheet causing issues - crashing etc. Hmm, it shouldn't and anyway, we'll only do it once. The parnters shoudl still be better off with google forms than copying things twice into an excel file and back.. But it's worth looking into other options that would e.g. allow offline solutions.
+
+Also *Awesome table* is a thing, a gadget or app that works on top of sheets to display the raw data in various ways.
+But this is maybe a paid service? There is now sth called Google Data Studio instead?
 
 
 

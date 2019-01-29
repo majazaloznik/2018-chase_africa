@@ -310,50 +310,6 @@ That may make more sense, giving them the tools to keep this running in the futu
 
 Meeting with Catherine
 
-### Data Management Plan:
-
-* MZ will look for some examples from research project funding applications.
-* DMP should include clear rules on missing values
-* DMP should clearly and comprehensively describe the migration process and any issues that arose during it and any decisions that had to be made 
-* naming conventions should also be described here. for files, for variables etc. 
-
-### Data
-
-* in the past some of the data has been estimated. e.g. when the split of first time users and repeat users wasn't known it was sometimes estimated. This needs to be flagged in the dataset! e.g. with a separate variable indicator for the source of these variables: from the partners or estimates.
-* Additionally there is the question of what does 'first use' even mean? This should be defined somewhere clearly.
-* in the past some of the data was for multiple day clinics. this means the row by row data is not comparable. But this is actually true anyway, the data can only be reasonably compared by month/quarter or year. but we could add a variable to indicate whether the clinic was single or multiple day. 
-
-### Data collection
-
-It would be good to have a clearer understanding of the local partner's process of data input. What are they doing now for Chase Africa as well as what they are doing for others e.g. their government. This is to get a better idea of how much effort they are already putting into this for CA's sake, whether they find this useful for their own record keeping. 
-
-It would also be good to know where the potential dangers are on their side e.g. do they collect paper records over weeks and then input them all at once? Would it be possible for them to input the records immediately after a clinic? 
-
-So from the partners point of view they could have three options for passing on their information:
-
-* status quo - they add rows to the existing excel table and send it over to CP once every quarter, who migrates the data manually
-* a new table - i.e. a tidy table with no subtotals and no calculations in the spreadsheet. this would be better data managgement practice, would not significantly change the amount of effort required on their part, and would make the data migration safer and more streamlined. 
-* google forms - depending on what their data input process is this could be more, same or less effort than what they are doing now. Regardless, the transition would represent a one off investment of time, but it is difficult to estimate how much. It would be great if we were able to pilot it!
-
-### Data storage
-
-Current proposal that allows for all data collection options described above is to have a google sheet with separate worksheets for 
-
-* the migrated data - this sheet is protected, it was input once and should not be changed
-* the responses from the google forms - this sheet is also protected and data is only automatically input from the forms
-* new inputs - if data continues to be provided via an excel table (current or new) this is where CP inputs it into a separate sheet, which is not protected from input.
-* main consolidated data - this spreadsheet takes data from all three sheets and merges it into one, additionally this is where any calculations are performed, not before. Again this is a spreadsheet that should be protected, as once it is set up there is no need for further intervention. 
-
-### Dashboard
-
-Google Data Studio provides a great platform for setting up a dashboard which would allow:
-* overview of important stats
-* quick visualisations of all variables, original and derived
-* easy access to subsets of data table, easy to export
-* modularity: separate dashboards can be set up for each individual partner, and a main more comprehensive dashboard to be used by chase Africa. 
-
-
-
 Google Data Studio notes:
 
 * Pivot tables in google data studio (youtube https://www.youtube.com/watch?v=_oPyRgaA--E) hmm, the pivot tables are made in the dashboard design, not in the dashboard itself by the user.
@@ -371,3 +327,41 @@ Google Data Studio notes:
  data explorer allows you to query larger tables and export them to
 
  * Appscript?!
+ 
+# Thursday 24.1.2019
+
+Write up minutes and send off to Catherine
+
+# Friday 25.1.2019 
+
+Draft google sheet
+
+* googe form questions: 
++ under 18 and disabilities should have the option NA in case they weren't recording this information? So don't limit it to numbers only. 
+* protecting the range.. It seems there are two options:
++ you set the name of the admin who can edit - not ideal, the admin is the only one with access anyway
++ you allow everyone to edit, but they get a warning. probably better if only one person has access anyway. 
+
+OK, so seems query() and importrange() are unnecessary, i can instead get what i want using filter() and len() to determine the number of rows to import.  
+
+But in a test table i get both to work:
+
+* ={filter(Sheet1!A:C, len(Sheet1!A1:A)); filter(Sheet2!A2:C, len(Sheet2!A2:A))}
+* =query({importrange("1dF29vOeHG4KXBZQFze6ky8_ReyyrgfdDGw5GP1ChO5Y", "Sheet1!A:C"); importrange("1dF29vOeHG4KXBZQFze6ky8_ReyyrgfdDGw5GP1ChO5Y", "Sheet2!A:C")},"where Col1 is not null",1 )
+
+OK, so there seem to be some issues with importrange() if the columns are different types in each sheet, then then in the merged sheet one type can dissapear.. 
+
+
+# Monday 28.1.2019
+
+Hmm, so the query doens't seem to be working from another worksheet...
+
+Aha, it does, but you first have to connect the worksheet. And that doesn't work with the query, you have to first do a simple  importrange() that establishes the connection. The you can delete it and the query will now work correctly. 
+
+OK, so instructions for setting up the master spreadsheet, I'll write them up so that Catherine can do it herself.
+
+# Tuesday 29.1.2019
+
+Remind Catherine about minutes.
+
+Continue writing the instructions in `2019-01-29-data_repository_setup.Rmd`

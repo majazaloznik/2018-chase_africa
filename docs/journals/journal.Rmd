@@ -365,3 +365,11 @@ OK, so instructions for setting up the master spreadsheet, I'll write them up so
 Remind Catherine about minutes.
 
 Continue writing the instructions in `2019-01-29-data_repository_setup.Rmd`
+
+# Wednesday 30.1.2019
+
+Notes for Catherine:
+
+* The positive tests in the health care quesitons could be checked so they are smaller than the number of tests performed. 
+
+
